@@ -148,6 +148,7 @@ export default {
       }
     },
     toggleLogin () {
+      this.popup = false
       if (this.showLogin) {
         this.showLogin = false
         this.showModal = false
