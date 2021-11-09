@@ -8,6 +8,7 @@ import { PostsModule } from './posts/posts.module';
 import { RepliesModule } from './replies/replies.module';
 import { TagsModule } from './tags/tags.module';
 import { UsersModule } from './users/users.module';
+import { TeamsModule } from './teams/teams.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UsersModule } from './users/users.module';
     RepliesModule,
     TagsModule,
     UsersModule,
+    TeamsModule,
   ],
   providers: [],
   controllers: [],

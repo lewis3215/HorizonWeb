@@ -18,6 +18,7 @@
     "skipLibCheck": true,
     "strictNullChecks": true,
     "target": "es2019",
+    "types": ["reflect-metadata", "jest"],
     "typeRoots": ["./typings", "./node_modules/@types"]
   },
   "include": ["./src/**/*.ts"],
