@@ -7,8 +7,8 @@ import { FilesModule } from './files/files.module';
 import { PostsModule } from './posts/posts.module';
 import { RepliesModule } from './replies/replies.module';
 import { TagsModule } from './tags/tags.module';
-import { UsersModule } from './users/users.module';
 import { TeamsModule } from './teams/teams.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [

@@ -2,22 +2,17 @@ import {
  Entity, Enum, ManyToOne, PrimaryKey,
 } from '@mikro-orm/core';
 import { nanoid } from 'nanoid';
-import { User } from '../users/user.entity';
-import { Team } from './team.entity';
+import { User } from '../../users/user.entity';
+import { TeamRole } from '../domain/team-member';
+import { TeamEntity } from './team.entity';
 
-export enum TeamRole {
-    Leader,
-    CoLeader,
-    Member,
-}
-
-@Entity()
-export class TeamMember {
+@Entity({ tableName: 'team_member' })
+export class TeamMemberEntity {
     @PrimaryKey()
     teamMemberId: string = nanoid(10);
 
     @ManyToOne()
-    team!: Team;
+    team!: TeamEntity;
 
     @ManyToOne()
     user!: User;

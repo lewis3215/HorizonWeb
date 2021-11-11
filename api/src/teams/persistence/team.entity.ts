@@ -2,10 +2,10 @@ import {
     Collection, Entity, OneToMany, PrimaryKey, Property,
 } from '@mikro-orm/core';
 import { nanoid } from 'nanoid';
-import { TeamMember } from './team-member.entity';
+import { TeamMemberEntity } from './team-member.entity';
 
-@Entity()
-export class Team {
+@Entity({ tableName: 'team' })
+export class TeamEntity {
     @PrimaryKey()
     teamId: string = nanoid(10);
 
@@ -16,22 +16,14 @@ export class Team {
     validated!: boolean;
 
     @OneToMany({
-        entity: () => TeamMember,
+        entity: () => TeamMemberEntity,
         mappedBy: member => member.team,
         orphanRemoval: true,
     })
-    members = new Collection<TeamMember>(this);
+    members = new Collection<TeamMemberEntity>(this);
 
     constructor(name: string) {
         this.name = name;
         this.validated = false;
-    }
-
-    public canEdit(userId: string): boolean {
-        return false;
-    }
-
-    public isLeader(userId: string): boolean {
-        return false;
     }
 }

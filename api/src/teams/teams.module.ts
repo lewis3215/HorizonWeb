@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TeamsService } from './teams.service';
+import { TeamsService } from './domain/teams.service';
 
 @Module({
   providers: [TeamsService],
