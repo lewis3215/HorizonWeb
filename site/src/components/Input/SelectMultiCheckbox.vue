@@ -143,6 +143,8 @@ export default {
   }
   &__dropdown {
     background: #fff;
+    font-family: AtkinsonHyperlegible;
+    color: black;
     position: absolute;
     left: 0;
     right: 0;
