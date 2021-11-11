@@ -37,7 +37,7 @@
                   :key="colName"
                   class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
                   :class="{ hidden: !selectedCols.includes(colName) }"
-                  @click="showPreview"
+                  @click="emitter.emit('togglePreview')"
                 >
                   <tags-list
                     v-if="colName==='TAGS'"
@@ -65,7 +65,7 @@
           :key="colName"
           class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
           :class="{ hidden: !selectedCols.includes(colName) }"
-          @click="showPreview"
+          @click="emitter.emit('togglePreview')"
         >
           <div v-if="colName==='TAGS'">
             TAGS:
@@ -79,10 +79,9 @@
         </div>
       </div>
     </div>
-
     <component
       :is="threadPreviewComponent"
-      v-if="popup"
+      :class="{hidden: showPreview}"
       @click.stop="() => {}"
     />
   </div>
@@ -118,8 +117,15 @@ export default defineComponent({
         TAGS: { display: (post) => post.tags },
         ACTIONS: { display: () => 'Show' }
       })
+    },
+    showPreview: {
+      type: Boolean,
+      default: () => false
     }
   },
+  emits: [
+    'togglePreview'
+  ],
   data () {
     return {
       selectedCols: Object.keys(this.columns),
@@ -137,20 +143,8 @@ export default defineComponent({
   },
   mounted () {
     this.threadPreviewComponent = 'threadPreview'
-    this.emitter.on('toggleModal', () => {
-      console.log('modal toggled', this.popup)
-      if (this.popup) {
-        this.popup = false
-      }
-    })
   },
   methods: {
-    showPreview: function () {
-      this.popup = !this.popup
-      if (this.popup) {
-        this.emitter.emit('toggleModal')
-      }
-    },
     sortTable: function sortTable (col) {
       if (this.sortColumn === col) {
         this.ascending = !this.ascending

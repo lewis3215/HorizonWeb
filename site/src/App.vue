@@ -50,6 +50,7 @@ import { ref, watch } from 'vue'
 
 import Topbar from '@/components/Topbar.vue'
 import Sidebar from '@/components/Sidebar.vue'
+// import LoginVue from './components/Login.vue'
 const breakWidth = 1024
 export default {
   components: {
@@ -96,7 +97,8 @@ export default {
       collapsingSidebar: false,
       smallScreen: isScreenSmall(),
       showModal: false,
-      showLogin: false
+      showLogin: false,
+      showPreview: false
     }
   },
   created () {
@@ -115,20 +117,36 @@ export default {
       this.toggleModal()
     })
 
+    this.emitter.on('togglePreview', () => {
+      this.togglePreview()
+    })
+
     window.addEventListener('resize', this.checkResize)
   },
   unmounted () {
     window.removeEventListener('resize', this.checkResize)
   },
   methods: {
-    toggleModal () {
+    toggleModal: function () {
       this.showModal = !this.showModal
       if (this.showLogin) {
         this.showLogin = false
       }
+      if (this.showPreview) {
+        this.showPreview = false
+      }
     },
 
-    toggleSidebar () {
+    togglePreview: function () {
+      this.showLogin = false
+      if (!this.showPreview) {
+        this.showPreview = true
+        console.log('showPreview is true')
+        this.toggleModal()
+      }
+    },
+
+    toggleSidebar: function () {
       if (this.smallScreen) {
         if (this.uncollapsedSidebar) {
           this.topbar.$el.removeEventListener('mousedown', this.toggleSidebar)
@@ -147,7 +165,8 @@ export default {
         this.closedSidebar = !this.closedSidebar
       }
     },
-    toggleLogin () {
+
+    toggleLogin: function () {
       this.popup = false
       if (this.showLogin) {
         this.showLogin = false

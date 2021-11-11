@@ -6,15 +6,18 @@
         centered-fixed z-50 bg-2"
       @click.stop="() => {}"
     >
-      <thread-compact-view :post="post" />
+      <!-- <thread-compact-view :post="post" /> -->
+      <p>
+        Hello the preview is loading…
+      </p>
     </div>
   </teleport>
 </template>
 <script>
-import ThreadCompactView from '../pages/Post/ThreadCompactView.vue'
+// import ThreadCompactView from '../pages/Post/ThreadCompactView.vue'
 export default {
   name: 'ThreadPreview',
-  components: { ThreadCompactView },
+  // components: { ThreadCompactView },
   data () {
     return {
       post: {
@@ -194,6 +197,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-
-</style>
