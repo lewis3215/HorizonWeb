@@ -91,6 +91,9 @@ export default {
       return el?.getBoundingClientRect()?.top ?? 0
     },
     stringToColour (str) {
+      if (str == null) {
+        return 'red-500'
+      }
       let index = 0
       const colors = ['gray', 'red', 'yellow', 'green', 'blue']
       const size = [300, 400, 500, 600, 700, 800, 900] // Can't be < 300 we need to see the white text
