@@ -16,7 +16,7 @@
         :ref="setTagRef"
         :key="i"
         :name="tag.name ?? tag"
-        :color="'red-500'"
+        :color="tag.color ?? 'red-500'"
       />
     </div>
     <!-- TODO: Link & tooltip preview -->

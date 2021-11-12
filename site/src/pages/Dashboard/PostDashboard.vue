@@ -50,7 +50,6 @@
               :key="colName"
               class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
               :class="{ hidden: !selectedCols.includes(colName)}"
-              @click="emitter.emit('togglePreview')"
             >
               <div v-if="colName==='STATUS'">
                 <div :class="{ 'status-marker-sucess': post.state, 'status-marker-failure': !post.state}" />
@@ -59,6 +58,13 @@
                 v-else-if="colName==='TAGS'"
                 :tags="post.tags"
               />
+              <button
+                v-else-if="colName==='ACTIONS'"
+                class="button"
+                @click="emitter.emit('togglePreview')"
+              >
+                {{ col.display(post) }}
+              </button>
               <div v-else>
                 {{ col.display(post) }}
               </div>
@@ -66,38 +72,38 @@
           </tr>
         </tbody>
       </table>
+    </div>
 
-      <div class="md:hidden">
+    <div class="md:hidden">
+      <div
+        v-for="post in posts"
+        :key="post"
+        class="flex flex-col card my-4"
+      >
         <div
-          v-for="post in posts"
-          :key="post"
-          class="flex flex-col card my-4"
+          v-for="(col, colName) in columns"
+          :key="colName"
+          class="px-6 py-4 whitespace-no-wrap border-b border-grey-200 text-sm leading-5 text-gray-500"
+          :class="{ hidden: !selectedCols.includes(colName) }"
+          @click="emitter.emit('togglePreview')"
         >
-          <div
-            v-for="(col, colName) in columns"
-            :key="colName"
-            class="px-6 py-4 whitespace-no-wrap border-b border-grey-200 text-sm leading-5 text-gray-500"
-            :class="{ hidden: selectedCols.includes(colName) }"
-            @click="emitter.emit('togglePreview')"
-          >
-            <div v-if="colName==='TAGS'">
-              TAGS:
-              <tags-list
-                :tags="post.tags"
-              />
-            </div>
-            <div v-else>
-              {{ colName }} : {{ col.display(post) }}
-            </div>
+          <div v-if="colName==='TAGS'">
+            TAGS:
+            <tags-list
+              :tags="post.tags"
+            />
+          </div>
+          <div v-else>
+            {{ colName }} : {{ col.display(post) }}
           </div>
         </div>
       </div>
-      <component
-        :is="threadPreviewComponent"
-        :class="{hidden: showPreview}"
-        @click.stop="() => {}"
-      />
     </div>
+    <component
+      :is="threadPreviewComponent"
+      :class="{hidden: showPreview}"
+      @click.stop="() => {}"
+    />
   </div>
 </template>
 

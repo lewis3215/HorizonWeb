@@ -6,100 +6,123 @@
         centered-fixed z-50 bg-2"
       @click.stop="() => {}"
     >
-      <!-- <thread-compact-view :post="post" /> -->
-      <p>
+      <thread-compact-view :thread="thread" />
+      <!-- <p>
         Hello the preview is loading…
-      </p>
+      </p> -->
     </div>
   </teleport>
 </template>
 <script>
-// import ThreadCompactView from '../pages/Post/ThreadCompactView.vue'
+import ThreadCompactView from '../pages/Post/ThreadCompactView.vue'
 export default {
   name: 'ThreadPreview',
-  // components: { ThreadCompactView },
+  components: { ThreadCompactView },
   data () {
     return {
-      post: {
+      thread: {
         views: 194,
         createdAt: '2021-02-04T13:51:36.631Z',
         updatedAt: '2021-03-04T13:51:36.631Z',
         post: {
           number: 194,
           upvotes: 69,
-          title: 'Les ordinateurs sur la deuxième rangée en salle E103 ne fonctionnent plus !',
-          content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nihil reprehenderit esse aperiam odit dignissimos, praesentium quia blanditiis autem atque molestias officiis deleniti magnam libero a? Optio recusandae totam soluta! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit optio, praesentium obcaecati facere quasi',
+          title:
+            'Les ordinateurs sur la deuxième rangée en salle E103 ne fonctionnent plus !',
+          content:
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nihil reprehenderit esse aperiam odit dignissimos, praesentium quia blanditiis autem atque molestias officiis deleniti magnam libero a? Optio recusandae totam soluta! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit optio, praesentium obcaecati facere quasi',
           creator: {
             pseudo: 'Pseudo',
             role: 'Rôle',
             img: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
           },
-          responses: [{
-            author: 'Pseudo',
-            content: 'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
-            likes: '185'
-          },
-          {
-            author: 'Pseudo',
-            content: 'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
-            likes: '185'
-          },
-          {
-            author: 'Pseudo',
-            content: 'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
-            likes: '185'
-          }]
+          comments: [
+            {
+              author: 'Pseudo',
+              content:
+                'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
+              likes: '185'
+            },
+            {
+              author: 'Pseudo',
+              content:
+                'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
+              likes: '185'
+            },
+            {
+              author: 'Pseudo',
+              content:
+                'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
+              likes: '185'
+            }
+          ]
         },
-        responses: [{
-          upvotes: 69,
-          title: 'Les ordinateurs sur la deuxième rangée en salle E103 ne fonctionnent plus !',
-          content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nihil reprehenderit esse aperiam odit dignissimos, praesentium quia blanditiis autem atque molestias officiis deleniti magnam libero a? Optio recusandae totam soluta! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit optio, praesentium obcaecati facere quasi',
-          creator: {
-            pseudo: 'Pseudo',
-            role: 'Role',
-            img: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
-          },
-          responses: [{
-            author: 'Pseudo',
-            content: 'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
-            likes: 185
+        replies: [
+          {
+            upvotes: 69,
+            title:
+              'Les ordinateurs sur la deuxième rangée en salle E103 ne fonctionnent plus !',
+            content:
+              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nihil reprehenderit esse aperiam odit dignissimos, praesentium quia blanditiis autem atque molestias officiis deleniti magnam libero a? Optio recusandae totam soluta! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit optio, praesentium obcaecati facere quasi',
+            creator: {
+              pseudo: 'Pseudo',
+              role: 'Role',
+              img: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
+            },
+            comments: [
+              {
+                author: 'Pseudo',
+                content:
+                  'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
+                likes: 185
+              },
+              {
+                author: 'Pseudo',
+                content:
+                  'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
+                likes: 185
+              },
+              {
+                author: 'Pseudo',
+                content:
+                  'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
+                likes: 185
+              }
+            ]
           },
           {
-            author: 'Pseudo',
-            content: 'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
-            likes: 185
-          },
-          {
-            author: 'Pseudo',
-            content: 'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
-            likes: 185
-          }]
-        },
-        {
-          upvotes: 69,
-          title: 'Les ordinateurs sur la deuxième rangée en salle E103 ne fonctionnent plus !',
-          content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nihil reprehenderit esse aperiam odit dignissimos, praesentium quia blanditiis autem atque molestias officiis deleniti magnam libero a? Optio recusandae totam soluta! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit optio, praesentium obcaecati facere quasi',
-          creator: {
-            pseudo: 'Pseudo',
-            role: 'Role',
-            img: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
-          },
-          responses: [{
-            author: 'Pseudo',
-            content: 'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
-            likes: 185
-          },
-          {
-            author: 'Pseudo',
-            content: 'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
-            likes: 1851
-          },
-          {
-            author: 'Pseudo',
-            content: 'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
-            likes: 185
-          }]
-        }],
+            upvotes: 69,
+            title:
+              'Les ordinateurs sur la deuxième rangée en salle E103 ne fonctionnent plus !',
+            content:
+              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nihil reprehenderit esse aperiam odit dignissimos, praesentium quia blanditiis autem atque molestias officiis deleniti magnam libero a? Optio recusandae totam soluta! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit optio, praesentium obcaecati facere quasi',
+            creator: {
+              pseudo: 'Pseudo',
+              role: 'Role',
+              img: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
+            },
+            responses: [
+              {
+                author: 'Pseudo',
+                content:
+                  'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
+                likes: 185
+              },
+              {
+                author: 'Pseudo',
+                content:
+                  'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
+                likes: 1851
+              },
+              {
+                author: 'Pseudo',
+                content:
+                  'Neque iudicantibus lacrimae maestitia filium maeror certe quod iudicantibus autem parentis .',
+                likes: 185
+              }
+            ]
+          }
+        ],
         tags: [
           {
             title: 'TagExample',
