@@ -51,11 +51,14 @@
               v-for="(col, colName) in columns"
               :key="colName"
               class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
-              :class="{ hidden: !selectedCols.includes(colName) }"
+              :class="{ hidden: !selectedCols.includes(colName)}"
               @click="emitter.emit('togglePreview')"
             >
+              <div v-if="colName==='STATUS'">
+                <div :class="{ 'status-marker-sucess': post.state, 'status-marker-failure': !post.state}" />
+              </div>
               <tags-list
-                v-if="colName==='TAGS'"
+                v-else-if="colName==='TAGS'"
                 :tags="post.tags"
               />
               <div v-else>
@@ -187,5 +190,12 @@ export default defineComponent({
 }
 .tab-item {
   @apply border-b border-gray-200 bg-white text-sm max-h-16 overflow-hidden;
+}
+
+.status-marker-sucess {
+  @apply rounded-full bg-green-500 h-2 w-2;
+}
+.status-marker-failure {
+  @apply rounded-full bg-red-700 h-2 w-2;
 }
 </style>
