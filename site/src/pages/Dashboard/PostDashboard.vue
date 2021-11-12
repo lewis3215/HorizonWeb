@@ -5,25 +5,23 @@
         Dashboard Post
       </h1>
     </div>
-    <table class="min-w-full">
-      <thead>
-        <tr>
-          <th>
-            <input
-              class="m-3"
-              type="text"
-              placeholder="Search for by any order parameter..."
-            >
-          </th>
-          <th>
-            <select-multi-checkbox
-              v-model="selectedCols"
-              :filters="Object.keys(columns)"
-            />
-          </th>
-        </tr>
-      </thead>
-    </table>
+    <div class="flex flex-row pb-4">
+      <div class="px-4">
+        <select-multi-checkbox
+          v-model="selectedCols"
+          :filters="Object.keys(columns)"
+        />
+      </div>
+      <div class="px-4">
+        <div class="relative">
+          <input
+            class="h-10 w-102 pr-8 pl-5 rounded focus:shadow focus:outline-none"
+            type="text"
+            placeholder="Search for by any order parameter..."
+          >
+        </div>
+      </div>
+    </div>
     <div
       class="hidden md:block"
     >
