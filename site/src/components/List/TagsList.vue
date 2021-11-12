@@ -85,6 +85,22 @@ export default {
   },
   unmounted () {
     this.tagsList$.disconnect()
+  },
+  methods: {
+    getTop (el) {
+      return el?.getBoundingClientRect()?.top ?? 0
+    },
+    stringToColour (str) {
+      let index = 0
+      const colors = ['gray', 'red', 'yellow', 'green', 'blue']
+      const size = [300, 400, 500, 600, 700, 800, 900] // Can't be < 300 we need to see the white text
+      for (let i = 0; i < str.length; i++) {
+        index += str.charCodeAt(i)
+      }
+      const indexColor = index % colors.length
+      const indexSize = index % size.length
+      return colors[indexColor] + '-' + size[indexSize].toString()
+    }
   }
 }
 </script>
