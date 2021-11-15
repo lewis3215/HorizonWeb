@@ -1,5 +1,5 @@
-import type {TeamMember} from './team-member';
-import {TeamRole} from './team-member';
+import type { TeamMember } from './team-member';
+import { TeamRole } from './team-member';
 
 export class Team {
     public isValidated!: boolean;

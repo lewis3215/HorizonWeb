@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { TeamsService } from './domain/teams.service';
+import { DefaultTeamsService } from './service/team.service.default';
 
 @Module({
-  providers: [TeamsService],
+  providers: [DefaultTeamsService],
 })
 export class TeamsModule {}
