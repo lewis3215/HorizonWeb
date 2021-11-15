@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { CreateTeamDto } from './dto/create-team.dto';
+import type { CreateOrUpdateTeamDto } from './dto/create-team.dto';
 import type { GetTeamDto } from './dto/get-team.dto';
 import { TeamRepository } from './team.repository';
 import type { TeamService } from './team.service';
@@ -12,7 +12,7 @@ export class DefaultTeamService implements TeamService {
         this.repository = repository;
     }
 
-    public createTeam(dto: CreateTeamDto): GetTeamDto {
+    public createTeam(dto: CreateOrUpdateTeamDto): GetTeamDto {
         return undefined;
     }
 }

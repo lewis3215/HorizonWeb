@@ -1,1 +1,4 @@
-export class GetTeamDto {}
+export class GetTeamDto {
+    name!: string;
+    validated!: boolean;
+}
