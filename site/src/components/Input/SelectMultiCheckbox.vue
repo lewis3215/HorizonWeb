@@ -25,7 +25,7 @@
           >
         </div>
 
-        <div class=" checkbox-select__col">
+        <div class=" checkbox-select__col justify-left">
           <div class="checkbox-select__select-all">
             <label for="selectAll">{{ allSelected ? 'Clear All' : 'Select All' }}</label>
             <input
@@ -35,7 +35,8 @@
             >
           </div>
           <div class="checkbox-select__info">
-            {{ checkedFilters.length }} SELECTED
+            <br>
+            <!-- {{ checkedFilters.length }} SELECTED -->
           </div>
         </div>
 
