@@ -9,10 +9,11 @@
       <div class="px-4">
         <select-multi-checkbox
           v-model="selectedCols"
+          class="absolute justify-center"
           :filters="Object.keys(columns)"
         />
       </div>
-      <div class="px-4">
+      <div class="px-40">
         <div class="relative">
           <input
             class="h-10 w-102 pr-8 pl-5 rounded focus:shadow focus:outline-none"
