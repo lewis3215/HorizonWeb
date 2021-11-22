@@ -20,7 +20,7 @@ describe('Team Service', () => {
 
         const teamRepositoryMock = new Mock<TeamRepository>()
             .setup(mock => mock.insertTeam(It.IsAny()))
-            .callback(({args: [team]}) => {
+            .callback(({ args: [team] }) => {
                 insertedTeam = team;
                 return team;
             });

@@ -37,7 +37,17 @@ export class DefaultTeamService implements TeamService {
     }
 
     public async getTeam(teamId: string, currentUserId: string): Promise<GetTeamWithMembersDto> {
-        return new GetTeamWithMembersDto();
+        const team = await this.teamRepository.findTeamById(teamId);
+
+        const result = new GetTeamWithMembersDto();
+        result.name = team.name;
+        result.validated = team.isValidated;
+        result.members = team.members.map(member => ({
+            userId: member.user.userId,
+            userName: member.user.username,
+            role: member.role,
+        }));
+        return result;
     }
     //
     // public async addMember(teamId: string, currentUserId: string, member: CreateOrUpdateTeamMember): void {
