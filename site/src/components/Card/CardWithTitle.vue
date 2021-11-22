@@ -10,18 +10,12 @@
 </template>
 
 <script lang="js">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'CardWithTitle',
+export default {
   props: {
     title: {
       type: String,
-      default: '<Titre>'
+      default: 'Placeholder'
     }
-  },
-
-  methods: {
   }
-})
+}
 </script>

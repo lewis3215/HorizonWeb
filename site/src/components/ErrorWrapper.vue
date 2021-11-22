@@ -7,10 +7,7 @@
 </template>
 
 <script lang="js">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'Tag',
+export default {
   props: {
     meta: {
       type: Object,
@@ -25,7 +22,7 @@ export default defineComponent({
       default: '<Success>'
     }
   }
-})
+}
 </script>
 
 <style lang="scss">

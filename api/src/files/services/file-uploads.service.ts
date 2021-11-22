@@ -1,17 +1,16 @@
 import { promises as fs } from 'node:fs';
-import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import type { Express } from 'express';
-import 'multer';
+import { BaseRepository } from '../../shared/lib/repositories/base.repository';
 import type { FileKind } from '../../shared/lib/types/file-kind.enum';
 import type { User } from '../../users/user.entity';
 import { FileUpload } from '../entities/file-upload.entity';
 
 @Injectable()
-export class FilesService {
+export class FileUploadsService {
   constructor(
-    @InjectRepository(FileUpload) private readonly fileUploadRepository: EntityRepository<FileUpload>,
+    @InjectRepository(FileUpload) private readonly fileUploadRepository: BaseRepository<FileUpload>,
   ) {}
 
   public async getUploadById(fileUploadId: number): Promise<FileUpload | null> {

@@ -6,12 +6,17 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { PaginateDto } from '../shared/modules/pagination/paginate.dto';
+import type { PaginatedResult } from '../shared/modules/pagination/pagination.interface';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import type { Tag } from './tag.entity';
 import { TagsService } from './tags.service';
 
+@ApiTags('Tags')
 @Controller('tags')
 export class TagsController {
   constructor(private readonly tagsService: TagsService) {}
@@ -22,7 +27,9 @@ export class TagsController {
   }
 
   @Get()
-  public async findAll(): Promise<Tag[]> {
+  public async findAll(@Query() query: PaginateDto): Promise<PaginatedResult<Tag>> {
+    if (query.page)
+      return await this.tagsService.findAll({ page: query.page, itemsPerPage: query.itemsPerPage ?? 10 });
     return await this.tagsService.findAll();
   }
 

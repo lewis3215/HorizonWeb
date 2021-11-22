@@ -1,21 +1,17 @@
 <template>
   <div>
     <img
-      :src="contributor.img"
       alt="Avatar"
       class="rounded-full h-8 w-8 mr-2 mt-1 bg-white"
+      :src="contributor.img"
       :title="contributor.pseudo"
     >
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent } from 'vue'
 
-export default defineComponent({
-  name: 'Response',
-  components: {
-  },
+export default {
   props: {
     contributor: {
       type: Object,
@@ -27,5 +23,5 @@ export default defineComponent({
       }
     }
   }
-})
+}
 </script>

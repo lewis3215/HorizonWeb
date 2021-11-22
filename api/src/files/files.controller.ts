@@ -19,32 +19,33 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
 import { Express, Response as Res } from 'express';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { config } from '../config';
-import { PaginateDto } from '../posts/dto/paginate.dto';
 import { CurrentUser } from '../shared/lib/decorators/current-user.decorator';
-import type { CustomPaginateResult } from '../shared/lib/pagination';
-import { labelize } from '../shared/lib/pagination';
 import { FileKind } from '../shared/lib/types/file-kind.enum';
+import { PaginateDto } from '../shared/modules/pagination/paginate.dto';
+import type { PaginatedResult } from '../shared/modules/pagination/pagination.interface';
 import { User } from '../users/user.entity';
 import { CreateStudyDocDto } from './dto/create-study-doc.dto';
 import { UpdateStudyDocDto } from './dto/update-study-doc.dto';
 import type { StudyDoc } from './entities/study-doc.entity';
-import { FilesService } from './services/file-uploads.service';
+import { FileUploadsService } from './services/file-uploads.service';
 import { StudyDocsService } from './services/study-docs.service';
 
+@ApiTags('File')
 @UseGuards(JwtAuthGuard)
 @Controller({ path: 'files' })
 export class FilesController {
   constructor(
     private readonly studyDocsService: StudyDocsService,
-    private readonly filesService: FilesService,
+    private readonly filesService: FileUploadsService,
   ) {}
 
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: config.get('uploadMaxSize') } }))
   @Post('/study-docs')
-  public async uploadCourseDocument(
+  public async create(
     @CurrentUser() user: User,
     @Body() createStudyDocDto: CreateStudyDocDto,
     @UploadedFile() file: Express.Multer.File,
@@ -55,31 +56,26 @@ export class FilesController {
     const fileUpload = await this.filesService.create(
       user,
       file,
-      FileKind.StudyDocs,
+      FileKind.StudyDoc,
       createStudyDocDto.fileLastModifiedAt,
     );
     return await this.studyDocsService.create(createStudyDocDto, fileUpload);
   }
 
   @Get('/study-docs')
-  public async getAllUploads(@Query() query: PaginateDto): Promise<CustomPaginateResult<StudyDoc>> {
-    if (query.page) {
-      const limit = query.itemsPerPage ?? 10;
-      const offset = (query.page - 1) * limit;
-      const { items, total } = await this.studyDocsService.findAll({ offset, limit });
-      return labelize(items, { offset, itemsPerPage: limit, total });
-    }
-    const { items, total } = await this.studyDocsService.findAll();
-    return labelize(items, { offset: 0, itemsPerPage: items.length, total });
+  public async findAll(@Query() query: PaginateDto): Promise<PaginatedResult<StudyDoc>> {
+    if (query.page)
+      return await this.studyDocsService.findAll({ page: query.page, itemsPerPage: query.itemsPerPage ?? 10 });
+    return await this.studyDocsService.findAll();
   }
 
-  @Get(':id')
-  public async getOne(@Param('id', ParseIntPipe) id: number): Promise<StudyDoc> {
+  @Get('/study-docs/:id')
+  public async findOne(@Param('id', ParseIntPipe) id: number): Promise<StudyDoc> {
     return await this.studyDocsService.findOne(id);
   }
 
-  @Patch(':id')
-  public async updateDoc(
+  @Patch('/study-docs/:id')
+  public async update(
     @CurrentUser() user: User,
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCourseDocDto: UpdateStudyDocDto,
@@ -88,7 +84,7 @@ export class FilesController {
   }
 
   @Get('/download/:id')
-  public async getFile(
+  public async findFile(
     @Param('id', ParseIntPipe) id: number,
     @Response({ passthrough: true }) res: Res,
   ): Promise<StreamableFile> {

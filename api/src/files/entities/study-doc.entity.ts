@@ -1,16 +1,21 @@
 import {
+  Collection,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
-import { Exclude } from 'class-transformer';
-import { CourseSubject } from './course-subject.entity';
+import { TransformTags } from '../../shared/lib/decorators/transform-tags.decorator';
+import { BaseEntity } from '../../shared/lib/entities/base.entity';
+import { Subject } from '../../subjects/subject.entity';
+import type { Tag } from '../../tags/tag.entity';
+import { DocSeries } from './doc-series.entity';
 import { FileUpload } from './file-upload.entity';
 
 @Entity()
-export class StudyDoc {
+export class StudyDoc extends BaseEntity {
   @PrimaryKey()
   studyDocId!: number;
 
@@ -18,39 +23,38 @@ export class StudyDoc {
   file!: FileUpload;
 
   @ManyToOne()
-  subject!: CourseSubject;
+  subject!: Subject;
 
-  @Property()
-  tags: string[] = [];
+  @ManyToOne()
+  docSeries?: DocSeries;
+
+  @ManyToMany()
+  @TransformTags()
+  tags = new Collection<Tag>(this);
 
   @Property({ type: 'text' })
   name?: string;
 
+  // School year corresponding to the document; e.g. 2017 -> 2017-18, 2018 -> 2018-19, etc.
   @Property()
   year?: number;
 
   @Property({ type: 'text' })
   description?: string;
 
-  @Property()
-  createdAt = new Date();
-
-  @Property({ onUpdate: () => new Date() })
-  @Exclude()
-  updatedAt = new Date();
-
   constructor(options: {
     file: FileUpload;
-    subject: CourseSubject;
-    tags?: string[];
+    subject: Subject;
+    docSeries?: DocSeries | null;
     name?: string;
     year?: number;
     description?: string;
   }) {
+    super();
     this.file = options.file;
     this.subject = options.subject;
-    if (options.tags)
-      this.tags = options.tags;
+    if (options.docSeries)
+      this.docSeries = options.docSeries;
     if (options.name)
       this.name = options.name;
     if (options.year)

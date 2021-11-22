@@ -1,7 +1,9 @@
 import { wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { EntityRepository } from '@mikro-orm/postgresql';
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { BaseRepository } from '../shared/lib/repositories/base.repository';
+import type { PaginationOptions } from '../shared/modules/pagination/pagination-option.interface';
+import type { PaginatedResult } from '../shared/modules/pagination/pagination.interface';
 import { Tag } from '../tags/tag.entity';
 import type { User } from '../users/user.entity';
 import type { CreatePostDto } from './dto/create-post.dto';
@@ -11,8 +13,8 @@ import { Post } from './entities/post.entity';
 @Injectable()
 export class PostsService {
   constructor(
-    @InjectRepository(Post) private readonly postRepository: EntityRepository<Post>,
-    @InjectRepository(Tag) private readonly tagRepository: EntityRepository<Tag>,
+    @InjectRepository(Post) private readonly postRepository: BaseRepository<Post>,
+    @InjectRepository(Tag) private readonly tagRepository: BaseRepository<Tag>,
   ) {}
 
   public async create(user: User, createPostDto: CreatePostDto): Promise<Post> {
@@ -23,11 +25,8 @@ export class PostsService {
     return post;
   }
 
-  public async findAll(
-    paginationOptions?: { offset: number; limit: number },
-  ): Promise<{ items: Post[]; total: number }> {
-    const [items, total] = await this.postRepository.findAndCount({}, { ...paginationOptions, populate: ['tags'] });
-    return { items, total };
+  public async findAll(paginationOptions?: PaginationOptions): Promise<PaginatedResult<Post>> {
+    return await this.postRepository.findWithPagination(paginationOptions, {}, { populate: ['tags'] });
   }
 
   public async findOne(postId: number): Promise<Post> {

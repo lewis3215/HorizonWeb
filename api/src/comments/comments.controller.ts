@@ -4,26 +4,27 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../shared/lib/decorators/current-user.decorator';
 import { VoteDto } from '../shared/modules/vote/vote.dto';
 import { User } from '../users/user.entity';
-import { CommentVotesService } from './comment-votes.service';
+import { CommentVotesService } from './comments-votes.service';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import type { Comment } from './entities/comment.entity';
 
+@ApiTags('Comments')
 @UseGuards(JwtAuthGuard)
 @Controller({
   path: [
-    'posts/:postId/comments',
-    'posts/comments',
+    'posts/replies/:replyId/comments',
+    'posts/replies/comments',
   ],
 })
 export class CommentsController {
@@ -35,15 +36,15 @@ export class CommentsController {
   @Post()
   public async create(
     @CurrentUser() user: User,
-    @Param('postId', ParseIntPipe) postId: number,
+    @Param('replyId') replyId: string,
     @Body() createCommentDto: CreateCommentDto,
   ): Promise<Comment> {
-    return await this.commentsService.create(user, postId, createCommentDto);
+    return await this.commentsService.create(user, replyId, createCommentDto);
   }
 
   @Get()
-  public async findAll(@Param('postId', ParseIntPipe) postId: number): Promise<Comment[]> {
-    return await this.commentsService.findAll(postId);
+  public async findAll(@Param('replyId') replyId: string): Promise<Comment[]> {
+    return await this.commentsService.findAll(replyId);
   }
 
   @Get(':id')

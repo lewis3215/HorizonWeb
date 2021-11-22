@@ -15,11 +15,15 @@ export class CreateStudyDocDto extends OmitType(CreateFileUploadDto, ['fileKind'
   @IsInt()
   year?: number;
 
+  @IsString()
+  subject: string;
+
   @IsNumber()
-  subject: number;
+  docSeries: number;
 
   @IsOptional()
   @IsArray()
+  @IsString({ each: true })
   tags?: string[];
 
   @IsOptional()
@@ -31,6 +35,6 @@ export class CreateStudyDocDto extends OmitType(CreateFileUploadDto, ['fileKind'
   description?: string;
 
   @IsOptional()
-  @IsIn([FileKind.StudyDocs])
-  fileKind?: FileKind.StudyDocs;
+  @IsIn([FileKind.StudyDoc])
+  fileKind?: FileKind.StudyDoc;
 }
