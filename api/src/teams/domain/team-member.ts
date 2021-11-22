@@ -1,9 +1,9 @@
 import type { User } from '../../users/user.entity';
 
 export enum TeamRole {
-    Member,
-    Leader,
-    CoLeader,
+    Member = 'Member',
+    Leader = 'Leader',
+    CoLeader = 'CoLeader',
 }
 
 export class TeamMember {

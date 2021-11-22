@@ -5,12 +5,12 @@ import type { GetTeamDto } from './dto/get-team.dto';
 import type { UpdateTeamDto } from './dto/update-team.dto';
 
 export interface TeamService {
-    createTeam(dto: CreateTeamDto, currentUserId: string): GetTeamDto;
-    getTeam(teamId: string, currentUserId: string): GetTeamWithMembersDto;
-    updateTeam(teamId: string, currentUserId: string, team: UpdateTeamDto): GetTeamDto;
-    deleteTeam(teamId: string, currentUserId: string): void;
-
-    addMember(teamId: string, currentUserId: string, member: CreateOrUpdateTeamMember): void;
-    updateRole(teamId: string, currentUserId: string, member: CreateOrUpdateTeamMember): void;
-    delete(teamId: string, userId: string, currentUserId: string): void;
+    createTeam(dto: CreateTeamDto, currentUserId: string): Promise<GetTeamDto>;
+    getTeam(teamId: string, currentUserId: string): Promise<GetTeamWithMembersDto>;
+//     UpdateTeam(teamId: string, currentUserId: string, team: UpdateTeamDto): Promise<GetTeamDto>;
+//     deleteTeam(teamId: string, currentUserId: string): Promise<void>;
+//
+//     addMember(teamId: string, currentUserId: string, member: CreateOrUpdateTeamMember): Promise<void>;
+//     updateRole(teamId: string, currentUserId: string, member: CreateOrUpdateTeamMember): Promise<void>;
+//     delete(teamId: string, userId: string, currentUserId: string): Promise<void>;
 }

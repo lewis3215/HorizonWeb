@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { User } from '../../users/user.entity';
 import { Team } from './team';
 import { TeamMember, TeamRole } from './team-member';
@@ -5,13 +6,13 @@ import { TeamMember, TeamRole } from './team-member';
 describe('Team unit tests', () => {
     it('Setting empty name value throw error', () => {
         // When & Then
-        expect(() => new Team('', true, false))
+        expect(() => new Team(nanoid(10), '', true, false))
             .toThrow(Error);
     });
 
     it('canEdit returns true when given user is a leader', () => {
         // Given
-        const team = new Team('Test Team', true, false);
+        const team = new Team(nanoid(10), 'Test Team', true, false);
         const user = new User('Test User', 'test@test.fr');
         const member = new TeamMember(user, TeamRole.Leader);
         team.members = [member];
@@ -25,7 +26,7 @@ describe('Team unit tests', () => {
 
     it('canEdit returns true when given user is a co-leader', () => {
         // Given
-        const team = new Team('Test Team', true, false);
+        const team = new Team(nanoid(10), 'Test Team', true, false);
         const user = new User('Test User', 'test@test.fr');
         const member = new TeamMember(user, TeamRole.CoLeader);
         team.members = [member];
@@ -39,7 +40,7 @@ describe('Team unit tests', () => {
 
     it('canDelete returns true when given user is a leader', () => {
         // Given
-        const team = new Team('Test Team', true, false);
+        const team = new Team(nanoid(10), 'Test Team', true, false);
         const user = new User('Test User', 'test@test.fr');
         const member = new TeamMember(user, TeamRole.Leader);
         team.members = [member];
@@ -53,7 +54,7 @@ describe('Team unit tests', () => {
 
     it('canDelete returns false when given user is a leader but team is official', () => {
         // Given
-        const team = new Team('Test Team', true, true);
+        const team = new Team(nanoid(10), 'Test Team', true, true);
         const user = new User('Test User', 'test@test.fr');
         const member = new TeamMember(user, TeamRole.Leader);
         team.members = [member];
@@ -67,7 +68,7 @@ describe('Team unit tests', () => {
 
     it('canDelete returns false when given user is a co-leader', () => {
         // Given
-        const team = new Team('Test Team', true, false);
+        const team = new Team(nanoid(10), 'Test Team', true, false);
         const user = new User('Test User', 'test@test.fr');
         const member = new TeamMember(user, TeamRole.CoLeader);
         team.members = [member];

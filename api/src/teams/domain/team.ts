@@ -2,6 +2,7 @@ import type { TeamMember } from './team-member';
 import { TeamRole } from './team-member';
 
 export class Team {
+    public teamId!: string;
     public isValidated!: boolean;
     public members!: TeamMember[];
     public isOfficial!: boolean;
@@ -19,7 +20,8 @@ export class Team {
         this.teamName = value;
     }
 
-    constructor(teamName: string, isValidated: boolean, isOfficial: boolean) {
+    constructor(teamId: string, teamName: string, isValidated: boolean, isOfficial: boolean) {
+        this.teamId = teamId;
         this.name = teamName;
         this.isValidated = isValidated;
         this.isOfficial = isOfficial;
