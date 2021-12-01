@@ -28,7 +28,7 @@ export class DefaultTeamService implements TeamService {
             new TeamMember(user, TeamRole.Leader),
         ];
 
-        this.teamRepository.insertTeam(team);
+        this.teamRepository.saveTeam(team);
 
         const result = new GetTeamDto();
         result.name = team.name;
@@ -49,10 +49,8 @@ export class DefaultTeamService implements TeamService {
         }));
         return result;
     }
-    //
-    // public async addMember(teamId: string, currentUserId: string, member: CreateOrUpdateTeamMember): void {
-    //     return;
-    // }
+
+    public async addMember(teamId: string, currentUserId: string, member: CreateOrUpdateTeamMember): Promise<void> {}
     //
     // public async delete(teamId: string, userId: string, currentUserId: string): void {}
     //
