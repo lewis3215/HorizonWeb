@@ -97,8 +97,7 @@ export default {
       collapsingSidebar: false,
       smallScreen: isScreenSmall(),
       showModal: false,
-      showLogin: false,
-      showPreview: false
+      showLogin: false
     }
   },
   created () {
@@ -117,10 +116,6 @@ export default {
       this.toggleModal()
     })
 
-    this.emitter.on('togglePreview', () => {
-      this.togglePreview()
-    })
-
     window.addEventListener('resize', this.checkResize)
   },
   unmounted () {
@@ -131,18 +126,6 @@ export default {
       this.showModal = !this.showModal
       if (this.showLogin) {
         this.showLogin = false
-      }
-      if (this.showPreview) {
-        this.showPreview = false
-      }
-    },
-
-    togglePreview: function () {
-      this.showLogin = false
-      if (!this.showPreview) {
-        this.showPreview = true
-        console.log('showPreview is true')
-        this.toggleModal()
       }
     },
 
@@ -167,7 +150,6 @@ export default {
     },
 
     toggleLogin: function () {
-      this.popup = false
       if (this.showLogin) {
         this.showLogin = false
         this.showModal = false

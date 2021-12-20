@@ -1,4 +1,32 @@
 <template>
+  <TransitionRoot
+    appear
+    :show="isOpen"
+    as="template"
+  >
+    <Dialog
+      as="div"
+      @close="closeModal"
+    >
+      <div class="fixed inset-0 z-10 overflow-y-auto">
+        <div class="min-h-screen px-4 text-center">
+          <ThreadPreview />
+          <TransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0"
+            enter-to="opacity-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100"
+            leave-to="opacity-0"
+          >
+            <DialogOverlay class="fixed inset-0" />
+          </TransitionChild>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
+
   <div>
     <div>
       <h1 class=" text-4xl text-top-left text-1 tracking-wider mt-6 mb-3 ml-2">
@@ -78,7 +106,7 @@
               <button
                 v-else-if="colName==='ACTIONS'"
                 class="button"
-                @click="emitter.emit('togglePreview')"
+                @click="openModal"
               >
                 {{ col.value(post) }}
               </button>
@@ -116,32 +144,37 @@
         </div>
       </div>
     </div>
-    <component
-      :is="threadPreviewComponent"
-      :class="{hidden: showPreview}"
-      @click.stop="() => {}"
-    />
   </div>
 </template>
 
 <script lang="js">
+import { ref, defineComponent } from 'vue'
 import TagsList from '@/components/List/TagsList.vue'
 import ThreadPreview from '@/components/ThreadPreview.vue'
-import { defineComponent } from 'vue'
 import SelectMultiCheckbox from '@/components/Input/SelectMultiCheckbox.vue'
+import {
+  TransitionRoot,
+  TransitionChild,
+  Dialog,
+  DialogOverlay
+} from '@headlessui/vue'
 export default defineComponent({
   name: 'AdminSide',
   components: {
-    ThreadPreview,
+    ThreadPreview: ThreadPreview,
     SelectMultiCheckbox,
-    TagsList
+    TagsList,
+    TransitionRoot,
+    TransitionChild,
+    Dialog,
+    DialogOverlay
   },
   props: {
     threads: {
       type: Array,
       default: () => []
     },
-    _posts: {
+    camelPosts: {
       type: Array,
       default: () => [
 
@@ -156,17 +189,26 @@ export default defineComponent({
       default: () => false
     }
   },
-  emits: [
-    'togglePreview'
-  ],
+  setup () {
+    const isOpen = ref(false)
+
+    return {
+      isOpen,
+      closeModal () {
+        isOpen.value = false
+      },
+      openModal () {
+        isOpen.value = true
+      }
+    }
+  },
   data () {
     return {
-      selectedCols: [],
+      selectedCols: ['ACTIONS'],
       ascending: false,
       sortColumn: '',
-      popup: false,
       threadPreviewComponent: null,
-      posts: this._posts,
+      posts: this.camelPosts,
       columns: {
 
         VOTES: { value: (post) => post.upvotes - post.downvotes, sort: 0 },

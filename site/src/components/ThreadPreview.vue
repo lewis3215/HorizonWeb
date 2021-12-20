@@ -1,17 +1,12 @@
 <template>
-  <teleport to="#global-modal">
-    <div
-      class="w-11/12 p-12 sm:w-8/12 md:w-6/12 lg:w-5/12 2xl:w-4/12
+  <div
+    class="w-11/12 p-12 sm:w-8/12 md:w-6/12 lg:w-5/12 2xl:w-4/12
         px-10 pt-12 pb-10 sm:px-10 sm:pt-6 sm:pb-4 mx-auto card
         centered-fixed z-50 bg-2"
-      @click.stop="() => {}"
-    >
-      <thread-compact-view :thread="thread" />
-      <!-- <p>
-        Hello the preview is loading…
-      </p> -->
-    </div>
-  </teleport>
+    @click.stop="() => {}"
+  >
+    <ThreadCompactView :thread="thread" />
+  </div>
 </template>
 <script>
 import ThreadCompactView from '../pages/Post/ThreadCompactView.vue'
