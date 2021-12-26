@@ -50,6 +50,57 @@
           >
         </div>
       </div>
+      <div>
+        <div
+          date-rangepicker
+          class="flex items-center"
+        >
+          <!-- // ! https://flowbite.com/docs/plugins/datepicker/#datepicker-example -->
+          <div class="relative">
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+              <svg
+                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              ><path
+                fill-rule="evenodd"
+                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                clip-rule="evenodd"
+              /></svg>
+            </div>
+            <input
+              name="start"
+              type="text"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Select date start"
+            >
+          </div>
+          <span class="mx-4 text-gray-500">
+            to
+          </span>
+          <div class="relative">
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+              <svg
+                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              ><path
+                fill-rule="evenodd"
+                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                clip-rule="evenodd"
+              /></svg>
+            </div>
+            <input
+              name="end"
+              type="text"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Select date end"
+            >
+          </div>
+        </div>
+      </div>
     </div>
     <div
       class="hidden md:block"
@@ -63,7 +114,9 @@
               class="px-6 py-3 border-b border-gray-200 bg-gray-90 text-left text-xs leading-4 font-medium text-black uppercase tracking-wider "
               :class="{ hidden: !selectedCols.includes(colName) }"
             >
-              <div class="flex items-center space-x-3">
+              <div
+                class="flex items-center space-x-3"
+              >
                 <p>
                   {{ colName }}
                 </p>
@@ -87,8 +140,10 @@
         </thead>
         <tbody>
           <tr
-            v-for="post in posts"
-            :key="post"
+            v-for="(post, i) in posts"
+            :key="i"
+            class="relative hover:bg-pink-200 opacity-50"
+            :class="{'bg-pink-500 opacity-30 text-pink-900': selectedRows.includes(post.postId)}"
           >
             <td
               v-for="(col, colName) in columns"
@@ -96,20 +151,33 @@
               class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
               :class="{ hidden: !selectedCols.includes(colName)}"
             >
+              <input
+                v-model="selectedRows"
+                :value="post.postId"
+                type="checkbox"
+                class="appearance-none w-full h-full absolute top-0 left-0 cursor-pointer"
+              >
               <div v-if="colName==='STATUS'">
                 <div :class="{ 'status-marker-sucess': post.state, 'status-marker-failure': !post.state}" />
+              </div>
+              <div v-else-if="colName==='SELECT'">
+                <i class="ri-check-line" />
               </div>
               <tags-list
                 v-else-if="colName==='TAGS'"
                 :tags="post.tags"
               />
-              <button
+              <div
                 v-else-if="colName==='ACTIONS'"
-                class="button"
-                @click="openModal"
+                class="relative"
               >
-                {{ col.value(post) }}
-              </button>
+                <button
+                  class="button"
+                  @click.stop="openModal"
+                >
+                  {{ col.value(post) }}
+                </button>
+              </div>
               <div v-else>
                 {{ col.value(post) }}
               </div>
@@ -191,7 +259,6 @@ export default defineComponent({
   },
   setup () {
     const isOpen = ref(false)
-
     return {
       isOpen,
       closeModal () {
@@ -204,13 +271,15 @@ export default defineComponent({
   },
   data () {
     return {
-      selectedCols: ['ACTIONS'],
+      selectedCols: ['SELECT', 'VOTES', 'STATUS', 'TITLE', 'OP', 'LAST ACTIVITY', 'CREATED AT', 'TYPE', 'TAGS', 'ACTIONS'],
+      selectedRows: [],
+      check: false,
       ascending: false,
       sortColumn: '',
       threadPreviewComponent: null,
       posts: this.camelPosts,
       columns: {
-
+        SELECT: { value: (post) => post.postId, sort: 0 },
         VOTES: { value: (post) => post.upvotes - post.downvotes, sort: 0 },
         STATUS: { value: (post) => post.state, sort: 0 },
         TITLE: { value: (post) => post.title, sort: 0 },

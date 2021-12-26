@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <breadcrumb />
 </template>
 
@@ -7,4 +7,4 @@ import Breadcrumb from '@/components/Breadcrumb.vue'
 export default {
   components: { Breadcrumb }
 }
-</script>
+</script> -->
