@@ -33,185 +33,247 @@
         Dashboard Post
       </h1>
     </div>
-    <div class="flex flex-row pb-4">
-      <div class="px-4">
-        <select-multi-checkbox
-          v-model="selectedCols"
-          class="absolute justify-center"
-          :filters="Object.keys(columns)"
-        />
-      </div>
-      <div class="px-40">
-        <div class="relative">
-          <input
-            class="h-10 w-102 pr-8 pl-5 rounded focus:shadow focus:outline-none"
-            type="text"
-            placeholder="Search for by any order parameter..."
-          >
-        </div>
-      </div>
-      <div>
-        <div
-          date-rangepicker
-          class="flex items-center"
+    <TabGroup vertical>
+      <TabList>
+        <Tab
+          v-slot="{ selected }"
+          as="template"
         >
-          <!-- // ! https://flowbite.com/docs/plugins/datepicker/#datepicker-example -->
+          <button
+            class="py-5 px-10 my-5 ml-4 rounded-l-xl"
+            :class="[selected ? 'bg-blue-500 text-white' : 'bg-white text-black']"
+          >
+            Posts
+          </button>
+        </Tab>
+        <Tab
+          v-slot="{ selected }"
+          as="template"
+        >
+          <button
+            class="py-5 px-10 my-5"
+            :class="[selected ? 'bg-blue-500 text-white' : 'bg-white text-black']"
+          >
+            Users
+          </button>
+        </Tab>
+        <Tab
+          v-slot="{ selected }"
+          as="template"
+        >
+          <button
+            class="py-5 px-10 my-5 rounded-r-xl"
+            :class="[selected ? 'bg-blue-500 text-white' : 'bg-white text-black']"
+          >
+            Notifications
+          </button>
+        </Tab>
+      </TabList>
+      <!-- // ! Top of the page before tables  -->
+      <div class="flex flex-row pb-4">
+        <div class="px-4">
+          <select-multi-checkbox
+            v-model="selectedCols"
+            class="absolute justify-center"
+            :filters="Object.keys(columns)"
+          />
+        </div>
+        <div class="px-40">
           <div class="relative">
-            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-              <svg
-                class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              ><path
-                fill-rule="evenodd"
-                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                clip-rule="evenodd"
-              /></svg>
-            </div>
             <input
-              name="start"
+              class="h-10 w-102 pr-8 pl-5 rounded focus:shadow focus:outline-none"
               type="text"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Select date start"
-            >
-          </div>
-          <span class="mx-4 text-gray-500">
-            to
-          </span>
-          <div class="relative">
-            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-              <svg
-                class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              ><path
-                fill-rule="evenodd"
-                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                clip-rule="evenodd"
-              /></svg>
-            </div>
-            <input
-              name="end"
-              type="text"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Select date end"
+              placeholder="Search for by any order parameter..."
             >
           </div>
         </div>
+        <div>
+          <div
+            date-rangepicker
+            class="flex items-center"
+          >
+            <!-- // ! https://flowbite.com/docs/plugins/datepicker/#datepicker-example -->
+            <div class="relative">
+              <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <svg
+                  class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                ><path
+                  fill-rule="evenodd"
+                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                  clip-rule="evenodd"
+                /></svg>
+              </div>
+              <input
+                name="start"
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Select date start"
+              >
+            </div>
+            <span class="mx-4 text-gray-500">
+              to
+            </span>
+            <div class="relative">
+              <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <svg
+                  class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                ><path
+                  fill-rule="evenodd"
+                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                  clip-rule="evenodd"
+                /></svg>
+              </div>
+              <input
+                name="end"
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Select date end"
+              >
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div
-      class="hidden md:block"
-    >
-      <table class="min-w-full">
-        <thead>
-          <tr>
-            <th
-              v-for="(col, colName) in columns"
-              :key="colName"
-              class="px-6 py-3 border-b border-gray-200 bg-gray-90 text-left text-xs leading-4 font-medium text-black uppercase tracking-wider "
-              :class="{ hidden: !selectedCols.includes(colName) }"
+      <TabPanels>
+        <TabPanel>
+          <!-- // ! Table for large windows -->
+          <div
+            class="hidden md:block"
+          >
+            <table class="min-w-full">
+              <thead>
+                <tr>
+                  <th
+                    v-for="(col, colName) in columns"
+                    :key="colName"
+                    class="px-6 py-3 border-b border-gray-200 bg-gray-90 text-left text-xs leading-4 font-medium text-black uppercase tracking-wider "
+                    :class="{ hidden: !selectedCols.includes(colName) }"
+                  >
+                    <div
+                      class="flex items-center space-x-3"
+                    >
+                      <p>
+                        {{ colName }}
+                      </p>
+                      <div
+                        v-if="columns[colName].sort !== undefined"
+                        class="flex flex-col"
+                        @click="sortTable(colName)"
+                      >
+                        <i
+                          class="ri-arrow-up-s-line"
+                          :class="{ hidden: !ascending }"
+                        />
+                        <i
+                          class="ri-arrow-down-s-line"
+                          :class="{ hidden: ascending }"
+                        />
+                      </div>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(post, i) in posts"
+                  :key="i"
+                  class="relative hover:bg-pink-200 hover:opacity-50"
+                  :class="{'bg-pink-500 opacity-30 text-pink-900': selectedRows.includes(post.postId)}"
+                >
+                  <td
+                    v-for="(col, colName) in columns"
+                    :key="colName"
+                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5"
+                    :class="{ hidden: !selectedCols.includes(colName)}"
+                  >
+                    <input
+                      v-model="selectedRows"
+                      :value="post.postId"
+                      type="checkbox"
+                      class="appearance-none w-full h-full absolute top-0 left-0 cursor-pointer"
+                    >
+                    <div v-if="colName==='STATUS'">
+                      <div :class="{ 'status-marker-sucess': post.state, 'status-marker-failure': !post.state}" />
+                    </div>
+                    <div v-else-if="colName==='SELECT'">
+                      <i class="ri-check-line" />
+                    </div>
+                    <tags-list
+                      v-else-if="colName==='TAGS'"
+                      :tags="post.tags"
+                    />
+                    <div
+                      v-else-if="colName==='ACTIONS'"
+                      class="relative"
+                    >
+                      <button
+                        class="button"
+                        @click.stop="openModal"
+                      >
+                        {{ col.value(post) }}
+                      </button>
+                    </div>
+                    <div v-else>
+                      {{ col.value(post) }}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- // ! Table for reduced windows -->
+          <div class="md:hidden">
+            <div
+              v-for="post in posts"
+              :key="post"
+              class="flex flex-col card my-4"
             >
               <div
-                class="flex items-center space-x-3"
+                v-for="(col, colName) in columns"
+                :key="colName"
+                class="px-6 py-4 whitespace-no-wrap border-b border-grey-200 text-sm leading-5 text-gray-500"
+                :class="{ hidden: !selectedCols.includes(colName) }"
+                @click="emitter.emit('togglePreview')"
               >
-                <p>
-                  {{ colName }}
-                </p>
+                <div v-if="colName==='STATUS'">
+                  <div :class="{ 'status-marker-sucess': post.state, 'status-marker-failure': !post.state}" />
+                </div>
+                <div v-else-if="colName==='SELECT'">
+                  <i class="ri-check-line" />
+                </div>
+                <tags-list
+                  v-else-if="colName==='TAGS'"
+                  :tags="post.tags"
+                />
                 <div
-                  v-if="columns[colName].sort !== undefined"
-                  class="flex flex-col"
-                  @click="sortTable(colName)"
+                  v-else-if="colName==='ACTIONS'"
+                  class="relative"
                 >
-                  <i
-                    class="ri-arrow-up-s-line"
-                    :class="{ hidden: !ascending }"
-                  />
-                  <i
-                    class="ri-arrow-down-s-line"
-                    :class="{ hidden: ascending }"
-                  />
+                  <button
+                    class="button"
+                    @click.stop="openModal"
+                  >
+                    {{ col.value(post) }}
+                  </button>
+                </div>
+                <div v-else>
+                  {{ col.value(post) }}
                 </div>
               </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(post, i) in posts"
-            :key="i"
-            class="relative hover:bg-pink-200 opacity-50"
-            :class="{'bg-pink-500 opacity-30 text-pink-900': selectedRows.includes(post.postId)}"
-          >
-            <td
-              v-for="(col, colName) in columns"
-              :key="colName"
-              class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
-              :class="{ hidden: !selectedCols.includes(colName)}"
-            >
-              <input
-                v-model="selectedRows"
-                :value="post.postId"
-                type="checkbox"
-                class="appearance-none w-full h-full absolute top-0 left-0 cursor-pointer"
-              >
-              <div v-if="colName==='STATUS'">
-                <div :class="{ 'status-marker-sucess': post.state, 'status-marker-failure': !post.state}" />
-              </div>
-              <div v-else-if="colName==='SELECT'">
-                <i class="ri-check-line" />
-              </div>
-              <tags-list
-                v-else-if="colName==='TAGS'"
-                :tags="post.tags"
-              />
-              <div
-                v-else-if="colName==='ACTIONS'"
-                class="relative"
-              >
-                <button
-                  class="button"
-                  @click.stop="openModal"
-                >
-                  {{ col.value(post) }}
-                </button>
-              </div>
-              <div v-else>
-                {{ col.value(post) }}
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="md:hidden">
-      <div
-        v-for="post in posts"
-        :key="post"
-        class="flex flex-col card my-4"
-      >
-        <div
-          v-for="(col, colName) in columns"
-          :key="colName"
-          class="px-6 py-4 whitespace-no-wrap border-b border-grey-200 text-sm leading-5 text-gray-500"
-          :class="{ hidden: !selectedCols.includes(colName) }"
-          @click="emitter.emit('togglePreview')"
-        >
-          <div v-if="colName==='TAGS'">
-            TAGS:
-            <tags-list
-              :tags="post.tags"
-            />
+            </div>
           </div>
-          <div v-else>
-            {{ colName }} : {{ col.value(post) }}
-          </div>
-        </div>
-      </div>
-    </div>
+        </TabPanel>
+        <TabPanel>
+          Content 2
+        </TabPanel>
+        <TabPanel>Content 3</TabPanel>
+      </TabPanels>
+    </TabGroup>
   </div>
 </template>
 
@@ -224,7 +286,12 @@ import {
   TransitionRoot,
   TransitionChild,
   Dialog,
-  DialogOverlay
+  DialogOverlay,
+  TabGroup,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel
 } from '@headlessui/vue'
 export default defineComponent({
   name: 'AdminSide',
@@ -235,7 +302,12 @@ export default defineComponent({
     TransitionRoot,
     TransitionChild,
     Dialog,
-    DialogOverlay
+    DialogOverlay,
+    TabGroup,
+    TabList,
+    Tab,
+    TabPanels,
+    TabPanel
   },
   props: {
     threads: {
