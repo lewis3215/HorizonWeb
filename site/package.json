@@ -8,7 +8,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "fake": "sh fake.sh"
+    "fake:generate": "sh fake.sh",
+    "fake:serve": "json-server --watch fake/db.json"
   },
   "dependencies": {
     "@headlessui/vue": "^1.4.2",
@@ -23,6 +24,7 @@
     "@vee-validate/rules": "^4.5.3",
     "axios": "^0.23.0",
     "core-js": "^3.6.5",
+    "json-server": "^0.17.0",
     "lodash": "^4.17.21",
     "mitt": "^3.0.0",
     "postcss-scss": "^4.0.2",
