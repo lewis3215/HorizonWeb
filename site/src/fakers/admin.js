@@ -19,7 +19,7 @@ const maxWBody = 15
 const minTitle = 1
 const maxTitle = 5
 const nUsers = 10
-const nPosts = 20
+const nPosts = 5
 const maxTagsPerUser = 5
 const minTagsPerUser = 0
 const maxTagsPerPost = 15
@@ -340,7 +340,7 @@ function allRepliesOfPost (postId) {
 var userDate = dayjs(users[users.length - 1].createdAt)
 var date = userDate
 
-for (const userId of range(2, 5)) {
+for (const userId of range(2, nUsers + 1)) {
   for (const post of posts) {
     for (const user of users) {
       if (Math.random() < 0.9) {
@@ -423,12 +423,26 @@ function logIfNotNull (err) {
     console.log(err)
   }
 }
-
+/*
 fs.writeFile(path.join(PATH, 'users.json'), JSON.stringify(users), 'utf8', (err) => logIfNotNull(err))
 fs.writeFile(path.join(PATH, 'posts.json'), JSON.stringify(posts), 'utf8', (err) => logIfNotNull(err))
 fs.writeFile(path.join(PATH, 'replies.json'), JSON.stringify(replies), 'utf8', (err) => logIfNotNull(err))
-fs.writeFile(path.join(PATH, 'tags.json'), JSON.stringify(replies), 'utf8', (err) => logIfNotNull(err))
+fs.writeFile(path.join(PATH, 'tags.json'), JSON.stringify(tags), 'utf8', (err) => logIfNotNull(err))
 fs.writeFile(path.join(PATH, 'comments.json'), JSON.stringify(comments), 'utf8', (err) => logIfNotNull(err))
 fs.writeFile(path.join(PATH, 'postVotes.json'), JSON.stringify(postVotes), 'utf8', (err) => logIfNotNull(err))
 fs.writeFile(path.join(PATH, 'replyVotes.json'), JSON.stringify(postVotes), 'utf8', (err) => logIfNotNull(err))
 fs.writeFile(path.join(PATH, 'activities.json'), JSON.stringify(activities), 'utf8', (err) => logIfNotNull(err))
+*/
+
+const db = {
+  users: users,
+  posts: posts,
+  replies: replies,
+  tags: tags,
+  comments: comments,
+  postVotes: postVotes,
+  // replyVotes: ,
+  activities: activities
+}
+
+fs.writeFile(path.join(PATH, 'db.json'), JSON.stringify(db), 'utf8', (err) => logIfNotNull(err))
