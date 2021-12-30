@@ -84,7 +84,7 @@ const startDate = dayjs('2020-01-01')
 function userFake (i, date) {
   // userDate = userDate.add(1 + parseInt(Math.random() * 10, 10), 'day')
   const user = {
-    userId: parseInt(i, 10),
+    id: parseInt(i, 10),
     createdAt: date.toString(),
     uuid: faker.datatype.uuid(),
     username: faker.internet.userName(),
@@ -95,14 +95,14 @@ function userFake (i, date) {
   }
 
   activities.push({
-    activityId: activityCount,
+    id: activityCount,
     createdAt: userDate.toString(),
     type: 'createAccount',
-    userId: user.userId,
+    userId: user.id,
     data: {
       username: user.username,
       email: user.email,
-      userId: user.userId,
+      userId: user.id,
       uuid: user.uuid
     }
   })
@@ -137,10 +137,10 @@ function tagsFake (date, author) {
     author,
     name: pickedTag.tagName,
     description: pickedTag.Excerpt,
-    tagId: tagsCount
+    id: tagsCount
   }
   activities.push({
-    activityId: activityCount,
+    id: activityCount,
     createdAt: date.toString(),
     type: 'createTag',
     userId: author,
@@ -168,11 +168,11 @@ function postFake (author, date) {
     upvotes: 0,
     views: 0,
     author,
-    postId: postsCount
+    id: postsCount
   }
 
   activities.push({
-    activityId: activityCount,
+    id: activityCount,
     createdAt: date.toString(),
     type: 'createVote',
     userId: author,
@@ -198,18 +198,18 @@ function repliesFake (author, date, postId) {
     upvotes: 0,
     views: 0,
     postId, // Reply to post n°
-    replyId: repliesCount, // Id of THIS reply
+    id: repliesCount, // Id of THIS reply
     author
   }
 
   activities.push({
-    activityId: activityCount,
+    id: activityCount,
     createdAt: date.toString(),
     type: 'createVote',
     userId: author,
     data: {
       postId, // Reply to post n°
-      replyId: reply.replyId,
+      replyId: reply.id,
       body: reply.body
     }
   })
@@ -224,19 +224,19 @@ function commentFake (author, date, parent) {
     body: faker.lorem.sentence(randomIntFromInterval(minWBody, maxWBody)),
     date: date.toString(),
     postId: parent.postId,
-    replyId: parent.replyId,
+    id: parent.id,
     commentId: commentsCount,
     author
   }
 
   activities.push({
-    activityId: activityCount,
+    id: activityCount,
     createdAt: date.toString(),
     type: 'createComment',
     userId: author,
     data: {
       postId: parent.postId,
-      replyId: parent.replyId,
+      replyId: parent.id,
       commentId: commentsCount,
       body: comment.body
     }
@@ -250,15 +250,15 @@ function commentFake (author, date, parent) {
 postVoteCount = 1
 function postVoteFake (author, post, date) {
   const vote = {
-    voteId: postVoteCount,
+    id: postVoteCount,
     vote: Math.random() < 0.75 ? 1 : -1,
     createdAt: date.toString(),
     userId: author,
-    postId: post.postId
+    postId: post.id
   }
 
   activities.push({
-    activityId: activityCount,
+    id: activityCount,
     createdAt: date.toString(),
     type: 'postVote',
     userId: author,
@@ -283,20 +283,20 @@ function postVoteFake (author, post, date) {
 replyVoteCount = 1
 function replyVoteFake (author, reply, date) {
   const vote = {
-    voteId: postVoteCount,
+    id: postVoteCount,
     vote: Math.random() < 0.75 ? 1 : -1,
     createdAt: date.toString(),
     userId: author,
-    replyId: reply.replyId
+    replyId: reply.id
   }
 
   activities.push({
-    activityId: activityCount,
+    id: activityCount,
     createdAt: date.toString(),
     type: 'replyVote',
     userId: author,
     data: {
-      replyId: reply.replyId,
+      replyId: reply.id,
       vote: vote.vote
     }
   })
@@ -308,7 +308,7 @@ function replyVoteFake (author, reply, date) {
 }
 
 users.push({
-  userId: 1,
+  id: 1,
   createdAt: startDate.toString(),
   uuid: faker.datatype.uuid(),
   username: 'admin',
@@ -344,48 +344,48 @@ for (const userId of range(2, nUsers + 1)) {
   for (const post of posts) {
     for (const user of users) {
       if (Math.random() < 0.9) {
-        posts[post.postId - 1].views++
+        posts[post.id - 1].views++
         if (Math.random() < 0.5) {
-          if (!hasAlreadyVotedPost(user.userId, post.postId)) {
-            postVotes.push(postVoteFake(user.userId, post,
+          if (!hasAlreadyVotedPost(user.id, post.id)) {
+            postVotes.push(postVoteFake(user.id, post,
               date.add(timeSteps[1] + parseInt(Math.random() * randomtimeSteps[2], 10), 'ms')))
 
             if (postVotes[postVotes.length - 1].vote === 1) {
-              posts[post.postId - 1].upvotes++
+              posts[post.id - 1].upvotes++
             } else {
-              posts[post.postId - 1].downvotes++
+              posts[post.id - 1].downvotes++
             }
           }
         }
       }
 
       if (Math.random() < 0.2) {
-        replies.push(repliesFake(user.userId, date, post.postId))
+        replies.push(repliesFake(user.id, date, post.id))
       }
 
       if (Math.random() < 0.1) {
-        posts.push(postFake(user.userId, date))
+        posts.push(postFake(user.id, date))
       }
 
-      for (const reply of allRepliesOfPost(post.postId)) {
+      for (const reply of allRepliesOfPost(post.id)) {
         if (Math.random() < 0.7) {
-          replies[reply.replyId - 1].views++
+          replies[reply.id - 1].views++
           if (Math.random() < 0.7) {
-            if (!hasAlreadyVotedReply(user.userId, reply.replyId)) {
-              replyVotes.push(replyVoteFake(user.userId, reply,
+            if (!hasAlreadyVotedReply(user.id, reply.id)) {
+              replyVotes.push(replyVoteFake(user.id, reply,
                 date.add(timeSteps[1] + parseInt(Math.random() * randomtimeSteps[2], 10), 'ms')))
 
               if (replyVotes[replyVotes.length - 1].vote === 1) {
-                replies[reply.replyId - 1].upvotes++
+                replies[reply.id - 1].upvotes++
               } else {
-                replies[reply.replyId - 1].downvotes++
+                replies[reply.id - 1].downvotes++
               }
             }
           }
         }
 
         if (Math.random() < 0.4) {
-          comments.push(commentFake(user.userId,
+          comments.push(commentFake(user.id,
             date.add(timeSteps[1] + parseInt(Math.random() * randomtimeSteps[2], 10), 'ms'), reply))
         }
       }
@@ -398,22 +398,22 @@ for (const userId of range(2, nUsers + 1)) {
   users.push(userFake(userId, userDate))
   for (const _ of range(0, randomIntFromInterval(minTagsPerUser, maxTagsPerUser))) {
     date = date.add(timeSteps[1] + parseInt(Math.random() * randomtimeSteps[0], 10), 'ms')
-    tags.push(tagsFake(date, users[users.length - 1].userId))
+    tags.push(tagsFake(date, users[users.length - 1].id))
   }
   for (const _ of range(0, randomIntFromInterval(0, maxPostPerUser))) {
     date = date.add(timeSteps[3] + parseInt(Math.random() * randomtimeSteps[2], 10), 'ms')
     posts.push(postFake(userId, date))
     for (const _ of range(0, randomIntFromInterval(0, maxCommentPerReply))) {
       date = date.add(timeSteps[0] + parseInt(Math.random() * randomtimeSteps[1], 10), 'ms')
-      comments.push(commentFake(users[randomIntFromInterval(0, users.length - 1)].userId, date, posts[posts.length - 1]))
+      comments.push(commentFake(users[randomIntFromInterval(0, users.length - 1)].id, date, posts[posts.length - 1]))
     }
 
     for (const _ of range(0, randomIntFromInterval(0, maxRepliesPerPost))) {
       date = date.add(timeSteps[3] + parseInt(Math.random() * randomtimeSteps[2], 10), 'ms')
-      replies.push(repliesFake(users[randomIntFromInterval(0, users.length - 1)].userId, date, posts[posts.length - 1].postId))
+      replies.push(repliesFake(users[randomIntFromInterval(0, users.length - 1)].id, date, posts[posts.length - 1].id))
       for (const _ of range(0, randomIntFromInterval(0, maxCommentPerReply))) {
         date = date.add(timeSteps[0] + parseInt(Math.random() * randomtimeSteps[1], 10), 'ms')
-        comments.push(commentFake(users[randomIntFromInterval(0, users.length - 1)].userId, date, replies[replies.length - 1]))
+        comments.push(commentFake(users[randomIntFromInterval(0, users.length - 1)].id, date, replies[replies.length - 1]))
       }
     }
   }

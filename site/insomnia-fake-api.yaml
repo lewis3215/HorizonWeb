@@ -1,0 +1,542 @@
+_type: export
+__export_format: 4
+__export_date: 2021-12-30T16:27:33.768Z
+__export_source: insomnia.desktop.app:v2021.7.2
+resources:
+  - _id: req_6b6acc076db84d70b787e51a08249cec
+    parentId: fld_f37f0f83af0b430d9656cf8f4f449546
+    modified: 1640880090992
+    created: 1640627658514
+    url: http://localhost:3000/users
+    name: ""
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_9699c68cbfcb4ef18c824e2e670909e8
+        name: _page
+        value: "2"
+        description: ""
+      - id: pair_4544fcfdf39f4b67b8b99509f254a47a
+        name: _limit
+        value: "7"
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1640634463686.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_f37f0f83af0b430d9656cf8f4f449546
+    parentId: wrk_40b6cb1a55854fa2b5c37277fe7bd1b3
+    modified: 1640880152994
+    created: 1640880088272
+    name: Users
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1640880148601
+    _type: request_group
+  - _id: wrk_40b6cb1a55854fa2b5c37277fe7bd1b3
+    parentId: null
+    modified: 1640626892892
+    created: 1640626892892
+    name: fake-api.yaml
+    description: ""
+    scope: design
+    _type: workspace
+  - _id: req_23503549e1524cbf861adc4deaba8917
+    parentId: fld_f37f0f83af0b430d9656cf8f4f449546
+    modified: 1640880095276
+    created: 1640880001475
+    url: http://localhost:3000/users
+    name: ""
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"createdAt": "Sun, 05 Jan 2020 01:31:41 GMT",
+        	"uuid": "fb83270a-95b4-4fe4-8671-6646b9ff4a73",
+        	"username": "Johnny_Bruen75",
+        	"email": "Dion.Ebert30@gmail.com",
+        	"password": "870c1ff4671e9dba4f49620d3d70ba8141fd93227213125885bcd0837fbe334b",
+        	"reputation": 4822,
+        	"avatar": "http://placeimg.com/640/480/sports"
+        }
+    parameters:
+      - id: pair_9699c68cbfcb4ef18c824e2e670909e8
+        name: _page
+        value: "2"
+        description: ""
+      - id: pair_4544fcfdf39f4b67b8b99509f254a47a
+        name: _limit
+        value: "7"
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_548493735b954c72aa1814ef7f87e93c
+    authentication: {}
+    metaSortKey: -1640634463636.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c307156737c04d1096353b9f4e90ebac
+    parentId: fld_2c41ee28f7ee41dba331657fc3391e5f
+    modified: 1640881040970
+    created: 1640641282728
+    url: http://localhost:3000/posts
+    name: ""
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_2b301c48429747e7ac8aba0468d2cccf
+        name: _page
+        value: "1"
+        description: ""
+      - id: pair_7c37c1f9773745a689342ce021ac2a08
+        name: _limit
+        value: "1"
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1640641282728
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_2c41ee28f7ee41dba331657fc3391e5f
+    parentId: wrk_40b6cb1a55854fa2b5c37277fe7bd1b3
+    modified: 1640880154429
+    created: 1640880134135
+    name: Posts
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1640880148576
+    _type: request_group
+  - _id: req_21e08b50a02d48d3842362fa157f410e
+    parentId: fld_2c41ee28f7ee41dba331657fc3391e5f
+    modified: 1640881080733
+    created: 1640881050907
+    url: http://localhost:3000/posts
+    name: ""
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"title": "Sit non.",
+        	"body": "Eos voluptatibus enim officia qui dolor voluptas asperiores minus.",
+        	"type": "Suggestion",
+        	"tags": [
+        		35,
+        		3,
+        		13,
+        		42,
+        		40,
+        		21,
+        		9,
+        		33,
+        		46,
+        		39,
+        		15,
+        		29
+        	],
+        	"createdAt": "Fri, 03 Jan 2020 06:53:45 GMT",
+        	"downvotes": 12,
+        	"upvotes": 4,
+        	"views": 41,
+        	"author": 1
+        }
+    parameters:
+      - id: pair_2b301c48429747e7ac8aba0468d2cccf
+        name: _page
+        value: "1"
+        description: ""
+      - id: pair_7c37c1f9773745a689342ce021ac2a08
+        name: _limit
+        value: "1"
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_62949ade5733419188d25cf72667e5d6
+    authentication: {}
+    metaSortKey: -1640637873207.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8275cfa009794b939b67523affd0f4c7
+    parentId: fld_eb04aba6ff2c4e03b3e448976364f502
+    modified: 1640881172472
+    created: 1640881101197
+    url: http://localhost:3000/replies
+    name: ""
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters:
+      - id: pair_0c99bf9008e0469e98a3fcdffc5c6266
+        name: _page
+        value: "1"
+        description: ""
+      - id: pair_4e68a3f169824ad09c615e874907d02e
+        name: _limit
+        value: "5"
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_9568bfa024bf45c696a34cec2bc37902
+    authentication: {}
+    metaSortKey: -1640641453535
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_eb04aba6ff2c4e03b3e448976364f502
+    parentId: wrk_40b6cb1a55854fa2b5c37277fe7bd1b3
+    modified: 1640880148551
+    created: 1640880148551
+    name: Replies
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1640880148551
+    _type: request_group
+  - _id: req_5827601b53984ccbaa99128954018d62
+    parentId: fld_eb04aba6ff2c4e03b3e448976364f502
+    modified: 1640881157559
+    created: 1640641453485
+    url: http://localhost:3000/replies
+    name: ""
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"body": "Voluptate ullam consequatur atque nihil et iusto pariatur quibusdam temporibus qui quam.",
+        	"createdAt": "Sat, 04 Jan 2020 08:35:38 GMT",
+        	"downvotes": 3,
+        	"upvotes": 5,
+        	"views": 29,
+        	"postId": 1,
+        	"author": 1
+        }
+    parameters:
+      - id: pair_0c99bf9008e0469e98a3fcdffc5c6266
+        name: _page
+        value: "1"
+        description: ""
+      - id: pair_4e68a3f169824ad09c615e874907d02e
+        name: _limit
+        value: "1"
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b060816e2cf8434ca2f12f70b9b1088e
+    authentication: {}
+    metaSortKey: -1640641453485
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_128e23a973594243a50a4f648fbcab0a
+    parentId: fld_00ac89a8ca8d4442a347fce99a9b164a
+    modified: 1640881346174
+    created: 1640641509480
+    url: http://localhost:3000/postVotes
+    name: ""
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_db831aab2f8e4436ba8b10891611968e
+        name: _page
+        value: "1"
+        description: ""
+      - id: pair_6708aea4f7b24131802b3248595c2bdc
+        name: _limit
+        value: "5"
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1640641597391
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_00ac89a8ca8d4442a347fce99a9b164a
+    parentId: wrk_40b6cb1a55854fa2b5c37277fe7bd1b3
+    modified: 1640880109727
+    created: 1640880109727
+    name: Votes
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1640880109727
+    _type: request_group
+  - _id: req_ed7a4e901ba64ec49428337ecd0f8cc9
+    parentId: fld_00ac89a8ca8d4442a347fce99a9b164a
+    modified: 1640881371674
+    created: 1640641652027
+    url: http://localhost:3000/postVotes
+    name: ""
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"vote": 1,
+        	"createdAt": "Sun, 12 Jan 2020 12:18:33 GMT",
+        	"userId": 1,
+        	"postId": 1
+        }
+    parameters:
+      - id: pair_132a9573026343f2a069142b60e8ce27
+        name: ""
+        value: ""
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_90307064d7634c7bbe696116095983ca
+    authentication: {}
+    metaSortKey: -1640641597341
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2ef9f9ae156346598fb1d339b5084525
+    parentId: fld_5608c43b544741ae80075562e77f6f6f
+    modified: 1640881454081
+    created: 1640641484018
+    url: http://localhost:3000/tags
+    name: ""
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_765592467ed044dc9b9c12fc34ccc898
+        name: _page
+        value: "1"
+        description: ""
+      - id: pair_9d23daadc9ec4ebf94943a7be4e64be9
+        name: _limit
+        value: "5"
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1640641484018
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_5608c43b544741ae80075562e77f6f6f
+    parentId: wrk_40b6cb1a55854fa2b5c37277fe7bd1b3
+    modified: 1640880216517
+    created: 1640880213000
+    name: Tags
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1640760796822.5
+    _type: request_group
+  - _id: req_c03d35e2b27840fe8f73d921e10884ec
+    parentId: fld_5608c43b544741ae80075562e77f6f6f
+    modified: 1640881524550
+    created: 1640881399884
+    url: http://localhost:3000/tags
+    name: ""
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"createdAt": "Wed, 01 Jan 2020 00:15:00 GMT",
+        	"author": 1,
+        	"name": "pizza",
+        	"description": ""
+        }
+    parameters:
+      - id: pair_765592467ed044dc9b9c12fc34ccc898
+        name: _page
+        value: "1"
+        description: ""
+      - id: pair_9d23daadc9ec4ebf94943a7be4e64be9
+        name: _limit
+        value: "5"
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_c78e22862fe2423d830ded50fa626b92
+    authentication: {}
+    metaSortKey: -1640641468776.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0c8835de621a412aa0863357c2c10c80
+    parentId: fld_471b4f94f49d4f95b3639a83c00f5ac0
+    modified: 1640881493309
+    created: 1640641542755
+    url: http://localhost:3000/activities/1
+    name: ""
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_3467636d9d184456b2474c70c3749c02
+        name: _page
+        value: "1"
+        description: ""
+      - id: pair_3a3575ed2d814230ab954f985cc87f29
+        name: _limit
+        value: "5"
+        description: ""
+    headers: []
+    authentication: {}
+    metaSortKey: -1640641542755
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_471b4f94f49d4f95b3639a83c00f5ac0
+    parentId: wrk_40b6cb1a55854fa2b5c37277fe7bd1b3
+    modified: 1640880222585
+    created: 1640880195073
+    name: Activities
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1640760796772.5
+    _type: request_group
+  - _id: req_29a40abfad954e74a4e0fa0adf99fc74
+    parentId: fld_471b4f94f49d4f95b3639a83c00f5ac0
+    modified: 1640881573145
+    created: 1640881395589
+    url: http://localhost:3000/activities
+    name: ""
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"createdAt": "Wed, 01 Jan 2020 00:15:00 GMT",
+        	"type": "createTag",
+        	"userId": 1,
+        	"data": {
+        		"name": "pizza",
+        		"description": "",
+        		"tagId": 71
+        	}
+        }
+    parameters:
+      - id: pair_3467636d9d184456b2474c70c3749c02
+        name: _page
+        value: "1"
+        description: ""
+      - id: pair_3a3575ed2d814230ab954f985cc87f29
+        name: _limit
+        value: "5"
+        description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_9c2a5675d3be471e842289a26249027d
+    authentication: {}
+    metaSortKey: -1640641513386.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_58bb80a0f08b4c6261964a686d920bbf9bf5828b
+    parentId: wrk_40b6cb1a55854fa2b5c37277fe7bd1b3
+    modified: 1640626892899
+    created: 1640626892899
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1640626892899
+    _type: environment
+  - _id: jar_58bb80a0f08b4c6261964a686d920bbf9bf5828b
+    parentId: wrk_40b6cb1a55854fa2b5c37277fe7bd1b3
+    modified: 1640626892902
+    created: 1640626892902
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_ad13a22409be45fd9b5df92bc32e0efd
+    parentId: wrk_40b6cb1a55854fa2b5c37277fe7bd1b3
+    modified: 1640626953642
+    created: 1640626892895
+    fileName: fake-api.yaml
+    contents: ""
+    contentType: yaml
+    _type: api_spec
