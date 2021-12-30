@@ -70,7 +70,10 @@
         </Tab>
       </TabList>
       <!-- // ! Top of the page before tables  -->
-      <div class="flex flex-row pb-4">
+      <div
+        v-if="!selectedRows.length > 0"
+        class="flex flex-row pb-4"
+      >
         <div class="px-4">
           <select-multi-checkbox
             v-model="selectedCols"
@@ -87,57 +90,35 @@
             >
           </div>
         </div>
-        <div>
-          <div
-            date-rangepicker
-            class="flex items-center"
-          >
-            <!-- // ! https://flowbite.com/docs/plugins/datepicker/#datepicker-example -->
-            <div class="relative">
-              <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                <svg
-                  class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                ><path
-                  fill-rule="evenodd"
-                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                  clip-rule="evenodd"
-                /></svg>
-              </div>
-              <input
-                name="start"
-                type="text"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Select date start"
-              >
-            </div>
-            <span class="mx-4 text-gray-500">
-              to
-            </span>
-            <div class="relative">
-              <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                <svg
-                  class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                ><path
-                  fill-rule="evenodd"
-                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                  clip-rule="evenodd"
-                /></svg>
-              </div>
-              <input
-                name="end"
-                type="text"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Select date end"
-              >
-            </div>
-          </div>
-        </div>
+      </div>
+      <div
+        v-else
+        class="flex"
+      >
+        <button
+          class="button flex-auto mx-5"
+          @click="selectedRows = []"
+        >
+          Unselect all
+        </button>
+        <button
+          class="button flex-auto mx-5"
+          @click="mass1()"
+        >
+          Mass Action 1
+        </button>
+        <button
+          class="button flex-auto mx-5"
+          @click="mass2()"
+        >
+          Mass Action 2
+        </button>
+        <button
+          class="button flex-auto mx-5"
+          @click="mass3()"
+        >
+          Mass Action 3
+        </button>
       </div>
       <TabPanels>
         <TabPanel>
@@ -182,8 +163,9 @@
                 <tr
                   v-for="(post, i) in posts"
                   :key="i"
-                  class="relative hover:bg-pink-200 hover:opacity-50"
-                  :class="{'bg-pink-500 opacity-30 text-pink-900': selectedRows.includes(post.postId)}"
+                  class="relative"
+                  :class="{'bg-blue-200 text-pink-900': selectedRows.includes(post.postId),
+                           'hover:bg-blue-100 hover:opacity-90': !selectedRows.includes(post.postId)}"
                 >
                   <td
                     v-for="(col, colName) in columns"
@@ -201,7 +183,10 @@
                       <div :class="{ 'status-marker-sucess': post.state, 'status-marker-failure': !post.state}" />
                     </div>
                     <div v-else-if="colName==='SELECT'">
-                      <i class="ri-check-line" />
+                      <i
+                        class="ri-check-line rounded-full p-1"
+                        :class="{'bg-green-500': selectedRows.includes(post.postId)}"
+                      />
                     </div>
                     <tags-list
                       v-else-if="colName==='TAGS'"
@@ -389,6 +374,21 @@ export default defineComponent({
         return 0
       })
       console.log(this.posts)
+    },
+    mass1: function mass1 () {
+      for (let i = 0; i < this.selectedRows.length; i++) {
+        console.log('Mass Action 1 on row', this.selectedRows[i])
+      }
+    },
+    mass2: function mass1 () {
+      for (let i = 0; i < this.selectedRows.length; i++) {
+        console.log('Mass Action 2 on row', this.selectedRows[i])
+      }
+    },
+    mass3: function mass1 () {
+      for (let i = 0; i < this.selectedRows.length; i++) {
+        console.log('Mass Action 3 on row', this.selectedRows[i])
+      }
     }
   }
 })
