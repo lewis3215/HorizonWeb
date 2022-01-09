@@ -334,7 +334,7 @@ export default defineComponent({
       ascending: false,
       sortColumn: '',
       threadPreviewComponent: null,
-      posts: this.camelPosts,
+      posts: this.$store.state.dashboard.posts.posts,
       columns: {
         SELECT: { value: (post) => post.postId, sort: 0 },
         VOTES: { value: (post) => post.upvotes - post.downvotes, sort: 0 },
