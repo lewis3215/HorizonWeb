@@ -24,37 +24,47 @@
                         :
                         {{ post.title }}
                         <i
+                            v-if="post.locked || post.closed"
+                            class="ri-lock-2-line text-gray-500"
+                        />
+                        <i
                             v-if="post.solved"
                             class="ri-check-line text-green-500 ri-lg"
                         />
                     </div>
                     <CarouselTags :tags="post.tags" />
-                    <div class="text-sm text-2">
+                    <div class="text-sm text-2 line-clamp-3">
                         {{ extractTextFromJSONBody(JSON.parse(post.body)) }}
                     </div>
                 </div>
             </div>
             <div class="flex gap-4 w-full">
                 <div class="w-1/12" />
-                <div class="w-full pt-2 border-t-2 flex justify-between items-center">
-                    <div class="flex gap-2 text-sm text-2">
-                        <div>Posté {{ timeAgo(post.createdAt) }}</div>
-                        •
-                        <div>3 Réponses</div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <div class="whitespace-nowrap text-2 text-sm">
-                            {{ post.author.username }}
-                        </div>
-
-                        <div class="relative hidden w-10 h-10 rounded-full md:block">
+                <div class="w-full pt-2 border-t-2 flex justify-between text-2">
+                    <div class="flex gap-2 items-center ">
+                        <div class="relative hidden w-12 h-12 rounded-full md:block">
                             <img
                                 class="object-cover w-full h-full rounded-full"
-                                :src="post.avatar ?? default_avatar"
-                                :alt="username"
+                                :src="post.author.avatar?? default_avatar"
+                                :alt="post.author.username"
                                 loading="lazy"
                             >
                         </div>
+                        <div class="whitespace-nowrap  text-sm">
+                            {{ post.author.username }}
+                        </div>
+
+                        <div class="text-sm">
+                            - Posté {{ timeAgo(post.createdAt) }}
+                        </div>
+
+                        <div class="text-sm">
+                            - 3 Réponses
+                        </div>
+                    </div>
+                    <div class="flex items-center invisible group-hover:visible gap-2 cursor-pointer">
+                        <i class="ri-arrow-go-back-line" />
+                        Répondre
                     </div>
                 </div>
             </div>
@@ -83,12 +93,10 @@ import default_avatar from '@/assets/img/default_avatars/user.png'
 import { abbrNumbers } from '@/utils/abbrNumbers'
 import { timeAgo } from '@/utils/timeAgo'
 import { extractTextFromJSONBody } from '@/utils/extractTextFromHTML'
-import UserPreview from '@/components/Dashboard/UserPreview.vue'
 import CarouselTags from '../List/CarouselTags.vue'
 
 export default {
     components: {
-        UserPreview,
         CarouselTags
     },
     props: {
@@ -100,10 +108,10 @@ export default {
     data () {
         return {
             headerTypes: {
-                1: { type: 'Question', icon: 'ri-questionnaire-line' },
-                2: { type: 'Suggestion', icon: 'ri-lightbulb-line' },
-                3: { type: 'Problème', icon: 'ri-error-warning-line' },
-                4: { type: 'Discussion', icon: 'ri-discuss-line' }
+                0: { type: 'Question', icon: 'ri-questionnaire-line' },
+                1: { type: 'Suggestion', icon: 'ri-lightbulb-line' },
+                2: { type: 'Problème', icon: 'ri-error-warning-line' },
+                3: { type: 'Discussion', icon: 'ri-discuss-line' }
             },
             default_avatar
         }

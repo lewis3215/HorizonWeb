@@ -33,7 +33,7 @@
                 class="flex justify-center"
             >
                 <post-card
-                    class="w-full md:w-21/24"
+                    class="w-full md:w-20/24"
                     :post="post"
                 />
             </div>

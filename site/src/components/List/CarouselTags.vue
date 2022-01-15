@@ -27,8 +27,8 @@
             <div
                 v-for="(el, index) in tags"
                 :key="index"
-                class="text-sm whitespace-normal py-1 px-2 rounded-full inline-block"
-                :class="`bg-${color}-100 dark:bg-2-dark text-${color}-400 dark:text-${color}-600`"
+                class="text-sm whitespace-normal py-1 px-2 rounded-full inline-block bg-blue-100 dark:bg-2-dark text-blue-400 dark:text-blue-600"
+                :class="``"
             >
                 {{ el.name }}
             </div>
@@ -62,7 +62,7 @@ export default {
         color:{
             type: String,
             default(){
-                return 'red'
+                return 'blue'
             }
         }
     },
