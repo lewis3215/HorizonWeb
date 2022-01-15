@@ -2,88 +2,59 @@
     <div>
         <div
             v-if="post"
-            class="bg-0 rounded-lg rounded-l-xl w-full"
+            class="card flex flex-col w-full group"
         >
-            <div class="flex w-full gap-3">
-                <div class="text-1 text-center flex flex-col flex-shrink-0 w-14 pt-1 pb-2 bg-5 rounded-l-lg">
-                    <i class="ri-add-line text-xl md:text-2xl mouse-icon" />
+            <div class="flex w-full gap-4">
+                <div class="w-1/12 text-1 flex flex-col items-center gap-2 pt-1 pb-2 rounded-l-lg">
+                    <i class="ri-arrow-up-s-line ri-lg hover:cursor-pointer" />
                     <div class="font-medium">
                         {{ abbrNumbers(post.upvotes - post.downvotes) }}
                     </div>
-                    <i class="ri-subtract-line text-xl md:text-2xl -mt-1 mouse-icon" />
-                    <i class="mt-1 ri-bookmark-line mouse-icon text-lg md:text-xl" />
-                    <i class="mt-2 ri-star-line text-lg md:text-xl mouse-icon" />
-                    <div class="text-sm font-medium">
-                        {{ abbrNumbers(post.favorites) }}
-                    </div>
+                    <i class="ri-arrow-down-s-line ri-lg marker:hover:cursor-pointer" />
+                    <div />
+
+                    <i class="mt-2 ri-star-line mouse-icon ri-lg invisible group-hover:visible hover:cursor-pointer hover:text-yellow-500 " />
+                    <i class="mt-2 ri-notification-2-line ri-lg mouse-icon invisible group-hover:visible hover:cursor-pointer hover:text-blue-500" />
                 </div>
 
-                <div class="pl-1 pr-4 my-3 mr-2">
-                    <span class="font-light text-3 flex flex-wrap space-x-1 items-center h-6 whitespace-nowrap overflow-hidden">
-                        <div class="flex space-x-1 pl-1">
-                            <i
-                                :class="headerTypes[post.type]?.icon"
-                                class="text-1"
-                            />
-                            <div class="text-1 font-bold">
-                                {{ headerTypes[post.type]?.type }}
-                            </div>
-                        </div>
-                        <div class="flex space-x-1 pl-1">
-                            <p class="pr-1">•</p>
-                            <div
-                                :class="[post.solved ? 'text-red-500' : 'text-green-500']"
-                            >
-                                {{ post.solved ? 'Non-Résolu' : '✓ Résolu' }}
-                            </div>
-                        </div>
-                        <div class="flex space-x-1 pl-1">
-                            <p class="pr-1">•</p>
-                            <i class="ri-file-edit-fill" />
-                            <div>{{ timeAgo(post.createdAt) }}</div>
-                        </div>
-                        <div class="flex space-x-1 pl-1">
-                            <p class="pr-1">•</p>
-                            <i class="ri-history-line" />
-                            <div> {{ timeAgo(post.contentLastUpdatedAt) }}</div>
-                        </div>
-                        <div class="flex space-x-1 pl-1">
-                            <p class="pr-1">•</p>
-                            <i class="ri-eye-line" />
-                            <div>{{ abbrNumbers(post.views) }}</div>
-                        </div>
-                    </span>
-
-                    <div class="mt-1">
-                        <router-link
-                            :to="`/post/${post.postId}`"
-                            class="text-xl text-0 font-semibold hover:underline line-clamp-1"
-                        >
-                            {{ post.title }}
-                        </router-link>
-
-                        <p class="mt-1 text-2 text-justify line-clamp-2">
-                            {{ extractTextFromJSONBody(JSON.parse(post.body)) }}
-                        </p>
-                    </div>
-
-                    <div class="flex items-start space-x-2 h-12 mt-4 mr-4">
-                        <a
-                            href="#"
-                            class="flex flex-shrink-0 items-center mr-4"
-                        >
-                            <user-preview
-                                :username="post.author.username"
-                                :avatar="post.author.avatar"
-                                :reputation="post.author.reputation"
-                            />
-                        </a>
-
-
-                        <TagsList
-                            class="w-full pr-5"
-                            :tags="post.tags"
+                <div class="h-full w-full flex flex-col gap-2">
+                    <div class="text-xl font-medium flex items-center gap-2">
+                        <i :class="headerTypes[post.type].icon " />
+                        {{ headerTypes[post.type].type }}
+                        :
+                        {{ post.title }}
+                        <i
+                            v-if="post.solved"
+                            class="ri-check-line text-green-500 ri-lg"
                         />
+                    </div>
+                    <CarouselTags :tags="post.tags" />
+                    <div class="text-sm text-2">
+                        {{ extractTextFromJSONBody(JSON.parse(post.body)) }}
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-4 w-full">
+                <div class="w-1/12" />
+                <div class="w-full pt-2 border-t-2 flex justify-between items-center">
+                    <div class="flex gap-2 text-sm text-2">
+                        <div>Posté {{ timeAgo(post.createdAt) }}</div>
+                        •
+                        <div>3 Réponses</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="whitespace-nowrap text-2 text-sm">
+                            {{ post.author.username }}
+                        </div>
+
+                        <div class="relative hidden w-10 h-10 rounded-full md:block">
+                            <img
+                                class="object-cover w-full h-full rounded-full"
+                                :src="post.avatar ?? default_avatar"
+                                :alt="username"
+                                loading="lazy"
+                            >
+                        </div>
                     </div>
                 </div>
             </div>
@@ -108,18 +79,17 @@
 </template>
 
 <script lang="js">
-
+import default_avatar from '@/assets/img/default_avatars/user.png'
 import { abbrNumbers } from '@/utils/abbrNumbers'
 import { timeAgo } from '@/utils/timeAgo'
 import { extractTextFromJSONBody } from '@/utils/extractTextFromHTML'
 import UserPreview from '@/components/Dashboard/UserPreview.vue'
-import TagsList from '@/components/List/TagsList.vue'
+import CarouselTags from '../List/CarouselTags.vue'
 
 export default {
     components: {
-
         UserPreview,
-        TagsList
+        CarouselTags
     },
     props: {
         post: {
@@ -135,10 +105,7 @@ export default {
                 3: { type: 'Problème', icon: 'ri-error-warning-line' },
                 4: { type: 'Discussion', icon: 'ri-discuss-line' }
             },
-            solvedState: {
-                0: { state: 'Non-Résolu', class: 'text-red-500' },
-                1: { state: '✓ Résolu', class: 'text-green-500' }
-            }
+            default_avatar
         }
     },
     methods: {

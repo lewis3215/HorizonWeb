@@ -16,7 +16,7 @@
             <p class="font-semibold whitespace-nowrap text-0">
                 {{ username }}
             </p>
-            <p class="text-sm text-gray-600 dark:text-gray-400">
+            <p class="text-sm text-gray-600 dark:text-gray-500">
                 {{ abbrNumbers(reputation) }}
             </p>
         </div>

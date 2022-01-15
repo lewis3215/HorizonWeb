@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="tags.length != 0"
-        class="relative flex m-2 items-center"
+        class="relative flex items-center"
     >
         <transition name="fade">
             <div
@@ -21,13 +21,14 @@
 
         <div
             ref="scroll"
-            class="w-0 basis-full block items-center justify-center gap-2 whitespace-nowrap overflow-y-hidden overflow-x-scroll scrollbar-none space-x-2"
+            class="w-0 basis-full block whitespace-nowrap overflow-y-hidden overflow-x-scroll scrollbar-none space-x-2"
             @scroll.passive="getScroll"
         >
             <div
                 v-for="(el, index) in tags"
                 :key="index"
-                class="whitespace-normal bg-blue-100 hover:bg-blue-200 hover:cursor-pointer text-blue-400 py-1 px-2 rounded-full inline-block"
+                class="text-sm whitespace-normal py-1 px-2 rounded-full inline-block"
+                :class="`bg-${color}-100 dark:bg-2-dark text-${color}-400 dark:text-${color}-600`"
             >
                 {{ el.name }}
             </div>
@@ -57,6 +58,12 @@ export default {
         tags:{
             type:Array,
             required:true
+        },
+        color:{
+            type: String,
+            default(){
+                return 'red'
+            }
         }
     },
     data() {
@@ -84,7 +91,7 @@ export default {
                     this.rightGradient = true
                 }
             }
-        }
+        },
     }
 }
 </script>

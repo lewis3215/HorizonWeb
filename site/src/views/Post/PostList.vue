@@ -17,6 +17,7 @@
             mb-10
             flex
             flex-col
+            gap-4
             "
         >
             <div
@@ -25,16 +26,17 @@
             >
                 Vous n'êtes pas connecté !
             </div>
-            <template
+            <div
                 v-for="(post, i) in posts"
                 v-else-if="posts.length"
                 :key="i"
+                class="flex justify-center"
             >
                 <post-card
-                    class="mb-2 mx-2/24"
+                    class="w-full md:w-21/24"
                     :post="post"
                 />
-            </template>
+            </div>
             <div
                 v-else
                 class="ml-32 text-2xl text-0"
