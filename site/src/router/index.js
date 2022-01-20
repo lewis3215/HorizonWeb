@@ -36,6 +36,14 @@ const routes = [
         component: () => import('@/views/Blog/BlogAdmin.vue')
     },
     {
+        path: '/guide/accueil',
+        component: () => import('@/views/Guide/GuideMain.vue')
+    },
+    {
+        path: '/guide/contacts',
+        component: () => import('@/views/Guide/GuideContacts.vue')
+    },
+    {
         path: '/post/:id',
         component: () => import('@/views/Post/ThreadCompactView.vue'),
         props: {
