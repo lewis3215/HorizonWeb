@@ -4,7 +4,8 @@ import FileService from '../services/files.service'
 const initialState = {
     studyDocs: [],
     infoDocs: [],
-    studyDocsFileTree: null,
+    studyDocsFileTree: [],
+    infoDocsFileTree: [],
     page: 1,
 }
 
@@ -55,6 +56,21 @@ export const files = {
                 },
             )
         },
+        getInfoDocs({ commit }, query) {
+            return FileService.getInfoDocs({
+                page: this.state.page,
+                ...query,
+            }).then(
+                (infoDocs) => {
+                    commit('getInfoDocsSuccess', infoDocs)
+                    return Promise.resolve(infoDocs)
+                },
+                (error) => {
+                    console.log(error)
+                    return Promise.reject(error)
+                },
+            )
+        },
         addStudyDoc(_, studyDoc) {
             return FileService.addStudyDoc(studyDoc).then(
                 (newStudyDoc) => Promise.resolve(newStudyDoc),
@@ -64,7 +80,7 @@ export const files = {
                 },
             )
         },
-        addInfoDoc(_, infoDoc) {
+        getInfoDoc(_, infoDoc) {
             return FileService.addInfoDoc(infoDoc).then(
                 (newInfoDoc) => {
                     Promise.resolve(newInfoDoc)
@@ -87,6 +103,19 @@ export const files = {
                 },
             )
         },
+
+        getInfoDocsTree({ commit }, query) {
+            return FileService.getInfoDocsTree(query).then(
+                (fileTree) => {
+                    commit('getInfoDocsTreeSuccess', fileTree)
+                    Promise.resolve(fileTree)
+                },
+                (error) => {
+                    console.log(error)
+                    return Promise.reject(error)
+                },
+            )
+        },
     },
     mutations: {
         refreshStudyDocs(state) {
@@ -100,8 +129,14 @@ export const files = {
         getStudyDocsSuccess(state, studyDocs) {
             state.studyDocs = studyDocs
         },
+        getInfoDocsSuccess(state, infoDocs) {
+            state.infoDocs = infoDocs
+        },
         getStudyDocsTreeSuccess(state, fileTree) {
             state.studyDocsFileTree = fileTree
+        },
+        getInfoDocsTreeSuccess(state, fileTree) {
+            state.infoDocsFileTree = fileTree
         },
     },
 }

@@ -6,17 +6,19 @@ class PostsService {
     getStudyDocs(query) {
         return axios
             .get(`${API_URL}/files/study-docs`, {
-                params: query,
+                data: query,
                 withCredentials: true,
+                headers: { Accept: 'application/json' },
             })
             .then((res) => res.data.items)
     }
 
     getInfoDocs(query) {
         return axios
-            .get(`${API_URL}/files/study-docs`, {
-                params: query,
+            .get(`${API_URL}/files/info-docs`, {
+                data: query,
                 withCredentials: true,
+                headers: { Accept: 'application/json' },
             })
             .then((res) => res.data.items)
     }
@@ -48,6 +50,16 @@ class PostsService {
     getStudyDocsTree(query) {
         return axios
             .get(`${API_URL}/files/study-docs/categories`, {
+                params: { categories: query },
+                withCredentials: true,
+                headers: { Accept: 'application/json' },
+            })
+            .then((res) => res.data)
+    }
+
+    getInfoDocsTree(query) {
+        return axios
+            .get(`${API_URL}/files/info-docs/categories`, {
                 params: { categories: query },
                 withCredentials: true,
                 headers: { Accept: 'application/json' },

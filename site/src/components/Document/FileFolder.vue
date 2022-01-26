@@ -1,7 +1,13 @@
 <template>
     <div
         class="flex gap-2 items-center p-1 hover:bg-2-light hover:dark:bg-2-dark rounded"
-        @click="$emit('path', [folderName]), toggleChildren()"
+        @click="
+            $emit('path', {
+                filters: { [context]: title },
+                children: children,
+            }),
+                toggleChildren()
+        "
     >
         <font-awesome-icon
             class="text-1"
@@ -12,7 +18,7 @@
         <font-awesome-icon class="text-1" :icon="'folder'" />
 
         <div>
-            {{ folderName }}
+            {{ contextList[context](title) }}
         </div>
     </div>
     <transition name="fade">
@@ -20,9 +26,10 @@
             <FileFolder
                 v-for="(child, i) in children"
                 :key="i"
-                :folder-name="child.name"
+                :title="child.title"
                 :children="child.children"
-                @path="$emit('path', [folderName, ...$event])"
+                :context="child.context"
+                @path="$emit('path', sendObject($event))"
             />
         </div>
     </transition>
@@ -31,7 +38,11 @@
 <script>
 export default {
     props: {
-        folderName: {
+        title: {
+            type: String,
+            required: true,
+        },
+        context: {
             type: String,
             required: true,
         },
@@ -44,13 +55,26 @@ export default {
     },
     emits: ['path'],
     data() {
-        return { showChildren: false }
+        return {
+            showChildren: false,
+            contextList: {
+                schoolYear: (val) => ['L1', 'L2', 'L3', 'M1', 'M2'][val],
+                subject: (val) => val,
+                type: (val) => val,
+                year: (val) => val,
+                query: (val) => val,
+            },
+        }
     },
     methods: {
         toggleChildren() {
             if (this.children.length > 0) {
                 this.showChildren = !this.showChildren
             }
+        },
+        sendObject(data) {
+            data.filters[this.context] = this.title
+            return data
         },
     },
 }
