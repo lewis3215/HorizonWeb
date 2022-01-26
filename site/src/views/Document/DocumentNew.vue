@@ -101,7 +101,7 @@
             </template>
 
             <template #step2>
-                <section>
+                <section class="flex flex-col gap-4">
                     <div>
                         <label for="promo"
                             >Année du document<span class="text-red-500">*</span>
@@ -128,7 +128,7 @@
                             </AppAlert>
                         </div>
                     </div>
-                    <div v-if="stepsModel[0].docType == 'studyDoc'" class="space-y-4">
+                    <div v-if="stepsModel[0].docType == 'studyDoc'" class="flex flex-col gap-4">
                         <div>
                             <div for="matiere">Matière<span class="text-red-500">*</span></div>
                             <div class="w-full">
@@ -298,6 +298,28 @@
                             </div>
                         </div>
                     </div>
+                    <div v-if="stepsModel[0].docType == 'infoDoc'">
+                        <div>
+                            <div for="doc-type">Promo<span class="text-red-500">*</span></div>
+                            <SelectInput
+                                v-model="stepsModel[1].docSchoolYear"
+                                :choices="['L1', 'L2', 'L3', 'M1', 'M2']"
+                            />
+                            <div v-if="v$.stepsModel[1].docSchoolYear.$error" class="flex flex-col">
+                                <AppAlert
+                                    v-for="(error, i) in v$.stepsModel[1].docSchoolYear.$errors"
+                                    :key="i"
+                                    type="error"
+                                >
+                                    <template #text>
+                                        <div class="subtitle">
+                                            {{ error.$message }}
+                                        </div>
+                                    </template>
+                                </AppAlert>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </template>
 
@@ -400,7 +422,7 @@ export default {
                     docName: {
                         required,
                         alphaNum,
-                        maxLength: maxLength(10)
+                        maxLength: maxLength(10),
                     },
                     docDescription: { alphaNum },
                 },
@@ -430,6 +452,7 @@ export default {
                                 [this.stepsModel[1].docContent])),
 
                     },
+                    docSchoolYear: { requiredIf: requiredIf( this.stepsModel[0].docType == 'infoDoc') },
                 },
                 { acceptCondition: { sameAs: sameAs(true) } },
             ],
@@ -455,6 +478,7 @@ export default {
                     docYear: '',
                     docContent: '',
                     docFlags: '',
+                    docSchoolYear: '',
                 },
                 { acceptCondition: false },
             ],
@@ -529,6 +553,7 @@ export default {
                             },
                         )
                     } else {
+                        form.append('schoolYear', this.stepsModel[1].docSchoolYear)
                         this.$store.dispatch('files/addInfoDoc', form).then(
                             () => {
                                 this.$router.push('/docs')

@@ -80,7 +80,7 @@ export const files = {
                 },
             )
         },
-        getInfoDoc(_, infoDoc) {
+        addInfoDoc(_, infoDoc) {
             return FileService.addInfoDoc(infoDoc).then(
                 (newInfoDoc) => {
                     Promise.resolve(newInfoDoc)
