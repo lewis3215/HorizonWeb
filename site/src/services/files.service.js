@@ -12,6 +12,15 @@ class PostsService {
             .then((res) => res.data.items)
     }
 
+    getInfoDocs(query) {
+        return axios
+            .get(`${API_URL}/files/study-docs`, {
+                params: query,
+                withCredentials: true,
+            })
+            .then((res) => res.data.items)
+    }
+
     addStudyDoc(data) {
         return axios
             .post(`${API_URL}/files/study-docs`, data, {
@@ -32,6 +41,16 @@ class PostsService {
                     Accept: 'application/json',
                     'Content-Type': 'multipart/form-data',
                 },
+            })
+            .then((res) => res.data)
+    }
+
+    getStudyDocsTree(query) {
+        return axios
+            .get(`${API_URL}/files/study-docs/categories`, {
+                params: { categories: query },
+                withCredentials: true,
+                headers: { Accept: 'application/json' },
             })
             .then((res) => res.data)
     }

@@ -154,6 +154,7 @@
                                                     class="text-lg"
                                                 />
                                                 <div>
+                                                    {{ subjectYear[slotValue.item.schoolYear] }}
                                                     {{ slotValue.item.name }}
                                                 </div>
                                                 <div class="text-xs text-2">
@@ -189,6 +190,7 @@
                                                     class="text-lg"
                                                 />
                                                 <div>
+                                                    {{ subjectYear[item.schoolYear] }}
                                                     {{ item.name }}
                                                 </div>
                                                 <div class="text-xs text-2">
@@ -259,7 +261,19 @@
                         <div
                             v-if="
                                 ['examDE', 'examCE', 'examCC', 'examDM', 'examTAI'].includes(
-                                    stepsModel[1].docContent,
+                                    [
+                                        'examDE',
+                                        'examCE',
+                                        'examCC',
+                                        'examDM',
+                                        'course',
+                                        'sheet',
+                                        'projects',
+                                        'efreiClass',
+                                        'eprofClass',
+                                        'classNote',
+                                        'other',
+                                    ][stepsModel[1].docContent],
                                 )
                             "
                             class="flex flex-col"
@@ -340,7 +354,7 @@ import SearchInput from '@/components/Input/SearchInput.vue'
 import SelectInput from '@/components/Input/SelectInput.vue'
 import useVuelidate from '@vuelidate/core'
 import {
-alphaNum, integer, required, requiredIf, sameAs
+alphaNum, integer, maxLength, required, requiredIf, sameAs
 } from '@vuelidate/validators'
 
 
@@ -386,12 +400,13 @@ export default {
                     docName: {
                         required,
                         alphaNum,
+                        maxLength: maxLength(10)
                     },
                     docDescription: { alphaNum },
                 },
                 {
                     docSubject: { requiredIf: requiredIf(this.stepsModel[0].docType == 'studyDoc') },
-                    cursus: { requiredIf: requiredIf( this.stepsModel[0].docType == 'studyDoc') },
+                    docCursus: { requiredIf: requiredIf( this.stepsModel[0].docType == 'studyDoc') },
                     docYear: {
                         required,
                         integer,
@@ -399,8 +414,21 @@ export default {
                     docContent: { requiredIf: requiredIf( this.stepsModel[0].docType == 'studyDoc') },
                     docFlags: {
                         requiredIf: requiredIf( this.stepsModel[0].docType == 'studyDoc' &&
-                            ['examDE','examCE','examCC', 'examDM', 'examTAI'].includes(this.stepsModel[1].docContent),
-                        ),
+                            ['examDE','examCE','examCC', 'examDM', 'examTAI'].includes([
+                                'examDE',
+                                'examCE',
+                                'examCC',
+                                'examDM',
+                                'course',
+                                'sheet',
+                                'projects',
+                                'efreiClass',
+                                'eprofClass',
+                                'classNote',
+                                'other',
+                            ]
+                                [this.stepsModel[1].docContent])),
+
                     },
                 },
                 { acceptCondition: { sameAs: sameAs(true) } },
@@ -430,6 +458,7 @@ export default {
                 },
                 { acceptCondition: false },
             ],
+            subjectYear: ['L1','L2', 'L3', 'M1', 'M2'],
         }
     },
     methods: {
@@ -448,6 +477,7 @@ export default {
         },
         nextStep() {
             this.v$.stepsModel[this.stepAction.currentStep].$validate()
+            console.log(this.v$.stepsModel[this.stepAction.currentStep].$errors)
             if (!this.v$.stepsModel[this.stepAction.currentStep].$invalid) {
                 this.stepAction.currentStep += 1
             }
@@ -458,16 +488,40 @@ export default {
                 for (let i=0;i<this.stepsModel[0].files.length;i++) {
                     let form = new FormData()
 
-                    form.append('file', this.stepsModel[0].files[i], this.stepsModel[0].files.length>1 ? this.stepsModel[0].docName+'_Part'+i : this.stepsModel[0].docName )
+                    form.append('file', this.stepsModel[0].files[i], (this.stepsModel[0].files.length>1 ? this.stepsModel[0].docName+'_Partie'+(i+1) : this.stepsModel[0].docName)+'.'+this.stepsModel[0].files[i].name.split('.').pop() )
                     form.append('description', this.stepsModel[0].docDescription)
                     form.append('year', this.stepsModel[1].docYear)
 
                     if (this.stepsModel[0].docType == 'studyDoc') {
                         form.append('subject',this.stepsModel[1].docSubject[0].code)
                         form.append('cursus',this.stepsModel[1].docCursus)
-                        form.append('type',this.stepsModel[1].docContent)
-                        if (['examDE','examCE','examCC', 'examDM', 'examTAI'].includes(this.stepsModel[1].docContent)) {
-                            form.append('flags',this.stepsModel[1].docFlags)
+                        form.append('type',[
+                            'examDE',
+                            'examCE',
+                            'examCC',
+                            'examDM',
+                            'course',
+                            'sheet',
+                            'projects',
+                            'efreiClass',
+                            'eprofClass',
+                            'classNote',
+                            'other',
+                        ][this.stepsModel[1].docContent])
+                        if (['examDE','examCE','examCC', 'examDM', 'examTAI'].includes([
+                            'examDE',
+                            'examCE',
+                            'examCC',
+                            'examDM',
+                            'course',
+                            'sheet',
+                            'projects',
+                            'efreiClass',
+                            'eprofClass',
+                            'classNote',
+                            'other',
+                        ][this.stepsModel[1].docContent])) {
+                            form.append('flags',1)
                         }
                         this.$store.dispatch('files/addStudyDoc', form).then(
                             () => {

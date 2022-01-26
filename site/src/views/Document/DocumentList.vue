@@ -26,10 +26,11 @@
                 </div>
             </div>
         </AppModal>
-        <div class="hidden w-1/5 md:block card">
+        <div class="hidden min-w-1/5 md:block card">
             <FileFolder
-                :folder-name="treeFake.folderName"
-                :children="treeFake.children"
+                v-if="$store.state.files.studyDocsFileTree"
+                folder-name="StudyDocs"
+                :children="$store.state.files.studyDocsFileTree"
                 @path="folderPath = $event"
             />
         </div>
@@ -316,6 +317,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch('files/getStudyDocs')
+        this.$store.dispatch('files/getStudyDocsTree')
     },
     methods: {
         dropDownButtons(studyDoc) {

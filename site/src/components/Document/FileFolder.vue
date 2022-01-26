@@ -20,7 +20,8 @@
             <FileFolder
                 v-for="(child, i) in children"
                 :key="i"
-                :="child"
+                :folder-name="child.name"
+                :children="child.children"
                 @path="$emit('path', [folderName, ...$event])"
             />
         </div>

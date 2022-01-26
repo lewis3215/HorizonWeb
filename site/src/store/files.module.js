@@ -3,6 +3,8 @@ import FileService from '../services/files.service'
 
 const initialState = {
     studyDocs: [],
+    infoDocs: [],
+    studyDocsFileTree: null,
     page: 1,
 }
 
@@ -62,10 +64,23 @@ export const files = {
                 },
             )
         },
-
         addInfoDoc(_, infoDoc) {
             return FileService.addInfoDoc(infoDoc).then(
-                (newInfoDoc) => Promise.resolve(newInfoDoc),
+                (newInfoDoc) => {
+                    Promise.resolve(newInfoDoc)
+                },
+                (error) => {
+                    console.log(error)
+                    return Promise.reject(error)
+                },
+            )
+        },
+        getStudyDocsTree({ commit }, query) {
+            return FileService.getStudyDocsTree(query).then(
+                (fileTree) => {
+                    commit('getStudyDocsTreeSuccess', fileTree)
+                    Promise.resolve(fileTree)
+                },
                 (error) => {
                     console.log(error)
                     return Promise.reject(error)
@@ -84,6 +99,9 @@ export const files = {
         },
         getStudyDocsSuccess(state, studyDocs) {
             state.studyDocs = studyDocs
+        },
+        getStudyDocsTreeSuccess(state, fileTree) {
+            state.studyDocsFileTree = fileTree
         },
     },
 }
