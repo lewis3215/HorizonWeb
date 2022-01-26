@@ -29,7 +29,7 @@
         <div class="hidden w-1/5 md:block card">
             <FileFolder
                 :folder-name="treeFake.folderName"
-                :childrens="treeFake.childrens"
+                :children="treeFake.children"
                 @path="folderPath = $event"
             />
         </div>
@@ -300,6 +300,7 @@ export default {
     },
     data() {
         return {
+            testToast: false,
             fileIcon,
             formatBytes,
             filesFilters: [],

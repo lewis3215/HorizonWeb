@@ -1,5 +1,5 @@
-import FileService from '../services/files.service'
 import { uniqBy } from '@/utils/uniqBy'
+import FileService from '../services/files.service'
 
 const initialState = {
     studyDocs: [],
@@ -53,12 +53,19 @@ export const files = {
                 },
             )
         },
-        addStudyDoc({ commit }, studyDoc) {
+        addStudyDoc(_, studyDoc) {
             return FileService.addStudyDoc(studyDoc).then(
-                (newStudyDoc) => {
-                    commit('addStudyDocSuccess', newStudyDoc)
-                    return Promise.resolve(newStudyDoc)
+                (newStudyDoc) => Promise.resolve(newStudyDoc),
+                (error) => {
+                    console.log(error)
+                    return Promise.reject(error)
                 },
+            )
+        },
+
+        addInfoDoc(_, infoDoc) {
+            return FileService.addInfoDoc(infoDoc).then(
+                (newInfoDoc) => Promise.resolve(newInfoDoc),
                 (error) => {
                     console.log(error)
                     return Promise.reject(error)
@@ -77,9 +84,6 @@ export const files = {
         },
         getStudyDocsSuccess(state, studyDocs) {
             state.studyDocs = studyDocs
-        },
-        addStudyDocSuccess(state, newStudyDoc) {
-            state.studyDocs.unshift(newStudyDoc)
         },
     },
 }

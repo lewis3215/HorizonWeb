@@ -1,55 +1,55 @@
 export const treeFake = {
     folderName: 'Main',
-    childrens: [
+    children: [
         {
             folderName: 'DE',
-            childrens: [
+            children: [
                 {
                     folderName: 'CE',
-                    childrens: [],
+                    children: [],
                 },
                 {
                     folderName: 'CE',
-                    childrens: [],
+                    children: [],
                 },
                 {
                     folderName: 'CE',
-                    childrens: [],
+                    children: [],
                 },
             ],
         },
         {
             folderName: 'CE',
-            childrens: [
+            children: [
                 {
                     folderName: 'CE',
-                    childrens: [],
+                    children: [],
                 },
                 {
                     folderName: 'CE',
-                    childrens: [],
+                    children: [],
                 },
                 {
                     folderName: 'CE',
-                    childrens: [],
+                    children: [],
                 },
             ],
         },
         {
             folderName: 'TAI',
-            childrens: [
+            children: [
                 {
                     folderName: 'CE',
-                    childrens: [
+                    children: [
                         {
                             folderName: 'CE',
-                            childrens: [
+                            children: [
                                 {
                                     folderName: 'CE',
-                                    childrens: [
+                                    children: [
                                         {
                                             folderName: 'CE',
-                                            childrens: [],
+                                            children: [],
                                         },
                                     ],
                                 },
@@ -59,13 +59,13 @@ export const treeFake = {
                 },
                 {
                     folderName: 'CE',
-                    childrens: [],
+                    children: [],
                 },
             ],
         },
         {
             folderName: 'Cours',
-            childrens: [],
+            children: [],
         },
     ],
 }

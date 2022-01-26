@@ -24,6 +24,18 @@ class PostsService {
             .then((res) => res.data)
     }
 
+    addInfoDoc(data) {
+        return axios
+            .post(`${API_URL}/files/info-docs`, data, {
+                withCredentials: true,
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            .then((res) => res.data)
+    }
+
     downloadFile({
         query, label, 
     }) {

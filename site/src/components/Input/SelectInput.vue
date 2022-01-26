@@ -87,7 +87,6 @@ export default {
     data() {
         return { max: 0 }
     },
-
     computed: {
         attributes() {
             let attributes = {}

@@ -1,14 +1,13 @@
 <template>
     <div
         class="flex gap-2 items-center p-1 hover:bg-2-light hover:dark:bg-2-dark rounded"
-        @click="$emit('path', [folderName])"
+        @click="$emit('path', [folderName]), toggleChildren()"
     >
         <font-awesome-icon
             class="text-1"
             size="sm"
-            :class="[childrens.length == 0 ? 'invisible' : '']"
-            :icon="showChildrens ? 'chevron-down' : 'chevron-right'"
-            @click="showChildrens = !showChildrens"
+            :class="[children.length == 0 ? 'invisible' : '']"
+            :icon="showChildren ? 'chevron-down' : 'chevron-right'"
         />
         <font-awesome-icon class="text-1" :icon="'folder'" />
 
@@ -17,11 +16,11 @@
         </div>
     </div>
     <transition name="fade">
-        <div v-if="showChildrens" class="flex flex-col p-1 ml-2 border-l">
+        <div v-if="showChildren" class="flex flex-col p-1 ml-2 border-l">
             <FileFolder
-                v-for="(children, i) in childrens"
+                v-for="(child, i) in children"
                 :key="i"
-                :="children"
+                :="child"
                 @path="$emit('path', [folderName, ...$event])"
             />
         </div>
@@ -35,7 +34,7 @@ export default {
             type: String,
             required: true,
         },
-        childrens: {
+        children: {
             type: Array,
             default() {
                 return []
@@ -44,7 +43,14 @@ export default {
     },
     emits: ['path'],
     data() {
-        return { showChildrens: false }
+        return { showChildren: false }
+    },
+    methods: {
+        toggleChildren() {
+            if (this.children.length > 0) {
+                this.showChildren = !this.showChildren
+            }
+        },
     },
 }
 </script>
