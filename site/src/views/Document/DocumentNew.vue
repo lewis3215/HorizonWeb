@@ -376,7 +376,7 @@ import SearchInput from '@/components/Input/SearchInput.vue'
 import SelectInput from '@/components/Input/SelectInput.vue'
 import useVuelidate from '@vuelidate/core'
 import {
-alphaNum, integer, maxLength, required, requiredIf, sameAs
+    alphaNum, integer, maxLength, required, requiredIf, sameAs,
 } from '@vuelidate/validators'
 
 

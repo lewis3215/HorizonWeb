@@ -98,9 +98,7 @@
 </template>
 
 <script>
-import {
-    articles, categories, 
-} from '@/fake/blog'
+import { articles, categories } from '@/fake/blog'
 import { users } from '@/fake/users'
 
 import { timeAgo } from '@/utils/timeAgo'

@@ -233,9 +233,7 @@ export default {
 
     data() {
         let that = this,
-            {
-                imgFormat, allowImgFormat, langType, langExt, width, height, 
-            } = that,
+            { imgFormat, allowImgFormat, langType, langExt, width, height } = that,
             isSupported = true,
             tempImgFormat = allowImgFormat.indexOf(imgFormat) === -1 ? 'jpg' : imgFormat,
             lang = language[langType] ? language[langType] : language['en'],
@@ -311,9 +309,7 @@ export default {
             return { width: progress + '%' }
         },
         sourceImgStyle() {
-            let {
-                    scale, sourceImgMasking, 
-                } = this,
+            let { scale, sourceImgMasking } = this,
                 top = scale.y + sourceImgMasking.y + 'px',
                 left = scale.x + sourceImgMasking.x + 'px'
             return {
@@ -324,9 +320,7 @@ export default {
             }
         },
         sourceImgMasking() {
-            let {
-                    width, height, ratio, sourceImgContainer, 
-                } = this,
+            let { width, height, ratio, sourceImgContainer } = this,
                 sic = sourceImgContainer,
                 sicRatio = sic.width / sic.height,
                 x = 0,
@@ -353,9 +347,7 @@ export default {
             }
         },
         sourceImgShadeStyle() {
-            let {
-                    sourceImgMasking, sourceImgContainer, 
-                } = this,
+            let { sourceImgMasking, sourceImgContainer } = this,
                 sic = sourceImgContainer,
                 sim = sourceImgMasking,
                 w = sim.width == sic.width ? sim.width : (sic.width - sim.width) / 2,
@@ -366,9 +358,7 @@ export default {
             }
         },
         previewStyle() {
-            let {
-                    ratio, previewContainer, 
-                } = this,
+            let { ratio, previewContainer } = this,
                 pc = previewContainer,
                 w = pc.width,
                 h = pc.height,
@@ -458,9 +448,7 @@ export default {
 
         checkFile(file) {
             let that = this,
-                {
-                    lang, maxSize, 
-                } = that
+                { lang, maxSize } = that
             if (file.type.indexOf('image') === -1) {
                 that.hasError = true
                 that.errorMsg = lang.error.onlyImg
@@ -493,9 +481,7 @@ export default {
         },
         startCrop() {
             let that = this,
-                {
-                    width, height, ratio, scale, sourceImgUrl, sourceImgMasking, lang, 
-                } = that,
+                { width, height, ratio, scale, sourceImgUrl, sourceImgMasking, lang } = that,
                 sim = sourceImgMasking,
                 img = new Image()
             img.src = sourceImgUrl
@@ -542,9 +528,7 @@ export default {
                 return false
             }
             let et = e.targetTouches ? e.targetTouches[0] : e,
-                {
-                    sourceImgMouseDown, scale, 
-                } = this,
+                { sourceImgMouseDown, scale } = this,
                 simd = sourceImgMouseDown
             simd.mX = et.screenX
             simd.mY = et.screenY
@@ -559,9 +543,7 @@ export default {
             }
             let et = e.targetTouches ? e.targetTouches[0] : e,
                 {
-                    sourceImgMouseDown: {
-                        on, mX, mY, x, y, 
-                    },
+                    sourceImgMouseDown: { on, mX, mY, x, y },
                     scale,
                     sourceImgMasking,
                 } = this,
@@ -591,9 +573,7 @@ export default {
         rotateImg() {
             let {
                     sourceImg,
-                    scale: {
-                        naturalWidth, naturalHeight, 
-                    },
+                    scale: { naturalWidth, naturalHeight },
                 } = this,
                 width = naturalHeight,
                 height = naturalWidth,
@@ -678,12 +658,8 @@ export default {
         },
         zoomImg(newRange) {
             let that = this,
-                {
-                    sourceImgMasking, scale, 
-                } = this,
-                {
-                    maxWidth, maxHeight, minWidth, minHeight, width, height, x, y, 
-                } = scale,
+                { sourceImgMasking, scale } = this,
+                { maxWidth, maxHeight, minWidth, minHeight, width, height, x, y } = scale,
                 sim = sourceImgMasking,
                 sWidth = sim.width,
                 sHeight = sim.height,
@@ -723,9 +699,7 @@ export default {
                     imgBgc,
                     mime,
                     sourceImg,
-                    scale: {
-                        x, y, width, height, 
-                    },
+                    scale: { x, y, width, height },
                     sourceImgMasking: { scale },
                 } = that,
                 canvas = that.$refs.canvas,
@@ -748,9 +722,7 @@ export default {
             that.createImgUrl = canvas.toDataURL(mime)
         },
         prepareUpload() {
-            let {
-                url, createImgUrl, field, ki, 
-            } = this
+            let { url, createImgUrl, field, ki } = this
             this.$emit('crop-success', createImgUrl, field, ki)
             if (typeof url == 'string' && url) {
                 this.upload()

@@ -79,9 +79,7 @@ class ThreadService {
         return post
     }
 
-    updatePost({
-        postId, title, body, 
-    }) {
+    updatePost({ postId, title, body }) {
         return axios
             .patch(
                 `${API_URL}/posts/${postId}/`,
@@ -100,9 +98,7 @@ class ThreadService {
             .then((res) => res.data)
     }
 
-    updateReply({
-        replyId, body, 
-    }) {
+    updateReply({ replyId, body }) {
         return axios
             .patch(`${API_URL}/posts/replies/${replyId}`, { body }, { withCredentials: true })
             .then((res) => res.data)

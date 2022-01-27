@@ -37,9 +37,7 @@ class UserService {
             .then((res) => res.data)
     }
 
-    addSocialAccount({
-        userId, socialId, pseudo, link, 
-    }) {
+    addSocialAccount({ userId, socialId, pseudo, link }) {
         return axios
             .post(
                 API_URL + `socials/user/${userId}/${socialId}`,
@@ -52,9 +50,7 @@ class UserService {
             .then((res) => res.data)
     }
 
-    updateSocialAccount({
-        socialAccountId, pseudo, link, 
-    }) {
+    updateSocialAccount({ socialAccountId, pseudo, link }) {
         return axios
             .patch(
                 API_URL + `socials/user/${socialAccountId}`,
@@ -90,7 +86,9 @@ class UserService {
                         }
                     } else if ('reply' in fav) {
                         const vote = await axios
-                            .get(API_URL + `posts/replies/${fav.reply.replyId}/vote`, { withCredentials: true })
+                            .get(API_URL + `posts/replies/${fav.reply.replyId}/vote`, {
+                                withCredentials: true,
+                            })
                             .then((res) => res.data.value)
                         const favorited = true
                         return {
@@ -103,7 +101,9 @@ class UserService {
                         }
                     } else {
                         const vote = await axios
-                            .get(API_URL + `posts/replies/comments/${fav.comment.commentId}/vote`, { withCredentials: true })
+                            .get(API_URL + `posts/replies/comments/${fav.comment.commentId}/vote`, {
+                                withCredentials: true,
+                            })
                             .then((res) => res.data.value)
                         const favorited = true
                         return {
@@ -186,9 +186,7 @@ class UserService {
             .then((res) => res.data.items)
     }
 
-    addClubMember({
-        clubId, userId, 
-    }) {
+    addClubMember({ clubId, userId }) {
         return axios
             .post(
                 `${API_URL}clubs/${clubId}/members/${userId}`,
@@ -198,18 +196,14 @@ class UserService {
             .then((res) => res.data)
     }
 
-    deleteClubMember({
-        clubId, userId, 
-    }) {
+    deleteClubMember({ clubId, userId }) {
         return axios
             .delete(`${API_URL}clubs/${clubId}/members/${userId}`, { withCredentials: true })
             .then(() => true)
             .catch(() => false)
     }
 
-    updateMemberRole({
-        clubId, userId, role, 
-    }) {
+    updateMemberRole({ clubId, userId, role }) {
         return axios
             .patch(`${API_URL}clubs/${clubId}/members/${userId}`, { role }, { withCredentials: true })
             .then((res) => res.data)

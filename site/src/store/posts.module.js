@@ -16,9 +16,7 @@ export const posts = {
     },
     state: initialState,
     actions: {
-        fetchPosts({
-            commit, state, 
-        }, query) {
+        fetchPosts({ commit, state }, query) {
             state.page++
             return PostsService.getPosts({
                 page: state.page,

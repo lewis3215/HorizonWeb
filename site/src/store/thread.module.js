@@ -35,9 +35,7 @@ export const thread = {
                 },
             )
         },
-        addReply({ commit }, {
-            postId, body, 
-        }) {
+        addReply({ commit }, { postId, body }) {
             return ThreadService.addReply(postId, body).then(
                 (reply) => {
                     commit('addReply', reply)
@@ -61,9 +59,7 @@ export const thread = {
                 },
             )
         },
-        addPostComment({ commit }, {
-            postId, body, 
-        }) {
+        addPostComment({ commit }, { postId, body }) {
             return ThreadService.addPostComment(postId, body).then(
                 (comment) => {
                     commit('addPostComment', comment)
@@ -75,9 +71,7 @@ export const thread = {
                 },
             )
         },
-        updateComment({ commit }, {
-            commentId, body, 
-        }) {
+        updateComment({ commit }, { commentId, body }) {
             return ThreadService.updateComment(commentId, body).then(
                 (comment) => {
                     commit('updateComment', comment)
@@ -89,9 +83,7 @@ export const thread = {
                 },
             )
         },
-        addReplyComment({ commit }, {
-            replyId, body, 
-        }) {
+        addReplyComment({ commit }, { replyId, body }) {
             return ThreadService.addReplyComment(replyId, body).then(
                 (comment) => {
                     commit('addReplyComment', {
@@ -106,9 +98,7 @@ export const thread = {
                 },
             )
         },
-        votePost({ commit }, {
-            postId, value, 
-        }) {
+        votePost({ commit }, { postId, value }) {
             return ThreadService.votePost(postId, value).then(
                 () => {
                     commit('votePost', value)
@@ -120,9 +110,7 @@ export const thread = {
                 },
             )
         },
-        voteReply({ commit }, {
-            replyId, value, 
-        }) {
+        voteReply({ commit }, { replyId, value }) {
             return ThreadService.voteReply(replyId, value).then(
                 () => {
                     commit('voteReply', {
@@ -239,9 +227,7 @@ export const thread = {
         addPostComment(state, comment) {
             state.thread.comments.unshift(comment)
         },
-        addReplyComment(state, {
-            comment, replyId, 
-        }) {
+        addReplyComment(state, { comment, replyId }) {
             state.thread.replies.find((reply) => reply.replyId === replyId).comments.unshift(comment)
         },
         updateReply(state, reply) {
@@ -281,9 +267,7 @@ export const thread = {
                 state.thread.downvotes += 1
             }
         },
-        voteReply(state, {
-            replyId, newVote, 
-        }) {
+        voteReply(state, { replyId, newVote }) {
             const replyIndex = state.thread.replies.findIndex((r) => r.replyId === replyId)
 
             const oldVote = state.thread.replies[replyIndex].currentVote
@@ -311,23 +295,17 @@ export const thread = {
                 state.thread.favorited = false
             }
         },
-        addFavoriteReply(state, {
-            replyId, worked, 
-        }) {
+        addFavoriteReply(state, { replyId, worked }) {
             if (worked) {
                 state.thread.replies.find((reply) => reply.replyId === replyId).favorited = true
             }
         },
-        deleteFavoriteReply(state, {
-            replyId, worked, 
-        }) {
+        deleteFavoriteReply(state, { replyId, worked }) {
             if (worked) {
                 state.thread.replies.find((reply) => reply.replyId === replyId).favorited = false
             }
         },
-        addFavoriteComment(state, {
-            commentId, worked, 
-        }) {
+        addFavoriteComment(state, { commentId, worked }) {
             if (worked) {
                 const index = state.thread.comments.findIndex((c) => c.commentId === commentId)
 
@@ -345,9 +323,7 @@ export const thread = {
                 }
             }
         },
-        deleteFavoriteComment(state, {
-            commentId, worked, 
-        }) {
+        deleteFavoriteComment(state, { commentId, worked }) {
             if (worked) {
                 const index = state.thread.comments.findIndex((c) => c.commentId === commentId)
 

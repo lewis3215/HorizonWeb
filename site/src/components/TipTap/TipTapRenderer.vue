@@ -3,9 +3,7 @@
 </template>
 <script>
 import { getEditor } from '@/utils/tiptap'
-import {
-    EditorContent, generateHTML,
-} from '@tiptap/vue-3'
+import { EditorContent, generateHTML } from '@tiptap/vue-3'
 
 export default {
     components: { EditorContent },

@@ -67,9 +67,7 @@ class PostsService {
             .then((res) => res.data)
     }
 
-    downloadFile({
-        url, label, 
-    }) {
+    downloadFile({ url, label }) {
         return axios
             .get(url, {
                 responseType: 'blob',

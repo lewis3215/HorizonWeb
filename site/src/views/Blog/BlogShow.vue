@@ -240,9 +240,7 @@
 </template>
 
 <script>
-import {
-    blogProfiles, articles, 
-} from '@/fake/blog'
+import { blogProfiles, articles } from '@/fake/blog'
 import { readingTimeMinutes } from '@/utils/readingTimeMinutes'
 import { timeAgo } from '@/utils/timeAgo'
 
@@ -250,9 +248,7 @@ import TipTapRenderer from '@/components/TipTap/TipTapRenderer.vue'
 import AppTag from '@/components/App/AppTag.vue'
 import DatePreview from '@/components/Dashboard/DatePreview.vue'
 
-import {
-    Disclosure, DisclosureButton, DisclosurePanel, 
-} from '@headlessui/vue'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { extractTextFromTipTapJSON } from '@/utils/tiptap'
 
 export default {
