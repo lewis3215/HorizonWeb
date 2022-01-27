@@ -14,7 +14,8 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 // prettier-ignore
 import {
-    faAddressCard, faArrowDown, faArrowRight, faAward, faBars, faBold, faBolt, faBook, faBookmark, faCalculator, faCamera, faCertificate, faCheck, faCheckCircle, faChevronDown, faChevronLeft, faChevronRight, faChevronUp, faCloudDownloadAlt, faCloudUploadAlt, faCog, faColumns, faComment, faCommentAlt, faComments, faCrown, faDizzy, faDownload, faEdit, faEllipsisH, faEnvelope, faExclamation, faExclamationCircle, faExternalLinkAlt, faEye, faFile, faFileUpload, faFlag, faFolder, faGrimace, faGrinBeamSweat, faHashtag, faHighlighter, faHistory, faHome, faHourglass, faHourglassEnd, faInfo, faInfoCircle, faItalic, faKey, faLeaf, faLink, faList, faMedal, faNewspaper, faPaperPlane, faParagraph, faPenAlt, faPhone, faPlus, faQuestionCircle, faSadCry, faSearch, faShareSquare, faSignInAlt, faSignOutAlt, faSlidersH, faSpinner, faStar, faStopwatch, faStrikethrough, faSurprise, faTags, faTerminal, faTh, faThumbsDown, faThumbsUp, faTimes, faTimesCircle, faToolbox, faTools, faTrash, faUnderline, faUniversalAccess, faUpload, faUser, faUserCog, faUserFriends, faUsers, faUserShield, faVial, faWind,
+    faAddressCard, faArrowDown, faArrowRight, faAward, faBars, faBold, faBolt, faBook, faBookmark, faCalculator, faCamera, faCertificate, faCheck, faCheckCircle, faChevronDown, faChevronLeft, faChevronRight, faChevronUp, faCircle, faCloudDownloadAlt, faCloudUploadAlt, faCog, faColumns, faComment, faCommentAlt, faComments, faCrown, faDizzy, faDownload, faEdit, faEllipsisH, faEnvelope, faExclamation, faExclamationCircle, faExternalLinkAlt, faEye, faFile, faFileUpload, faFlag, faFolder, faGrimace,
+    faGrinBeamSweat, faHashtag, faHighlighter, faHistory, faHome, faHourglass, faHourglassEnd, faInfo, faInfoCircle, faItalic, faKey, faLeaf, faLink, faList, faMedal, faNewspaper, faPaperPlane, faParagraph, faPenAlt, faPhone, faPlus, faQuestionCircle, faSadCry, faSearch, faShareSquare, faSignInAlt, faSignOutAlt, faSlidersH, faSpinner, faStar, faStopwatch, faStrikethrough, faSurprise, faTags, faTerminal, faTh, faThumbsDown, faThumbsUp, faTimes, faTimesCircle, faToolbox, faTools, faTrash, faUnderline, faUniversalAccess, faUpload, faUser, faUserCog, faUserFriends, faUsers, faUserShield, faVial, faWind,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -31,7 +32,7 @@ library.add(faPhone, faUser, faFlag, faThumbsUp, faThumbsDown, faCheckCircle, fa
     faCloudDownloadAlt, faList, faTh, faEllipsisH, faDownload, faPlus, faToolbox, faTools, faBookmark,
     faInfoCircle, faPaperPlane, faFile, faTerminal, faCalculator, faLeaf, faBolt, faBook, faSadCry,
     faGrimace, faGrinBeamSweat, faDizzy, faSurprise, faExclamation, faInfo, faSpinner, faArrowDown,
-    faArrowRight, faLink, faSlidersH, faCertificate, faEye)
+    faArrowRight, faLink, faSlidersH, faCertificate, faEye, faCircle)
 
 // Regular icons
 library.add(farFlag, farHourglass, farStar, farComment, farCommentAlt, farEdit, farThumbsUp, farThumbsDown)

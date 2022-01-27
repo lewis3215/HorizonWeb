@@ -161,21 +161,32 @@
                                                 @click="updateFileGroup(file)"
                                             />
                                         </div>
-                                        <div
-                                            v-if="file.file.user.roles.includes('moderator')"
-                                            class="relative"
-                                        >
-                                            <font-awesome-icon
-                                                class="text-blue-500"
-                                                icon="certificate"
-                                            ></font-awesome-icon>
-                                        </div>
-                                        <div class="flex justify-center items-center">
+
+                                        <div class="flex relative justify-center items-center">
                                             <DocumentIcon
                                                 class="w-8 h-8"
                                                 :mime="file.file.mimeType"
                                                 :file-name="file.file.name"
                                             />
+                                            <div
+                                                v-if="file.file.user.roles.includes('moderator')"
+                                                class="absolute -top-3 right-0"
+                                            >
+                                                <Popper :hover="true" :arrow="true">
+                                                    <font-awesome-icon
+                                                        class="text-blue-500 cursor-auto"
+                                                        icon="certificate"
+                                                        size="xs"
+                                                    ></font-awesome-icon>
+                                                    <template #content>
+                                                        <div
+                                                            class="p-2 px-3 whitespace-nowrap rounded shadow-lg bg-1"
+                                                        >
+                                                            Partagé par un prof
+                                                        </div>
+                                                    </template>
+                                                </Popper>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
