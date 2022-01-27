@@ -396,50 +396,50 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div v-if="filePreview || fileGroup.length != 0" class="hidden relative w-1/5 md:block">
-        <div class="sticky top-4">
-            <div class="flex flex-col gap-2">
-                <div v-if="filePreview" class="hidden md:block card">
-                    <div class="flex flex-col gap-2 divide-y">
-                        <div class="flex justify-center items-center">
-                            <DocumentIcon
-                                class="w-24 h-24"
-                                :mime="filePreview.file.mimeType"
-                                :file-name="filePreview.file.name"
-                            />
-                        </div>
-                        <div class="text-center">
-                            <div class="text-lg font-bold">
-                                {{ filePreview.file.name }}
+        <div v-if="filePreview || fileGroup.length != 0" class="hidden relative w-1/5 md:block">
+            <div class="sticky top-4">
+                <div class="flex flex-col gap-2">
+                    <div v-if="filePreview" class="hidden md:block card">
+                        <div class="flex flex-col gap-2 divide-y">
+                            <div class="flex justify-center items-center">
+                                <DocumentIcon
+                                    class="w-24 h-24"
+                                    :mime="filePreview.file.mimeType"
+                                    :file-name="filePreview.file.name"
+                                />
                             </div>
-                            <div class="text-sm">
-                                {{ new Date(filePreview.createdAt).toLocaleDateString() }}
-                            </div>
-                            <div class="text-sm">
-                                {{ formatBytes(filePreview.file.fileSize) }}
+                            <div class="text-center">
+                                <div class="text-lg font-bold">
+                                    {{ filePreview.file.name }}
+                                </div>
+                                <div class="text-sm">
+                                    {{ new Date(filePreview.createdAt).toLocaleDateString() }}
+                                </div>
+                                <div class="text-sm">
+                                    {{ formatBytes(filePreview.file.fileSize) }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div v-if="fileGroup.length > 0" class="card">
-                    <div class="flex flex-col gap-2">
-                        <div class="font-bold">
-                            {{ fileGroup.length }} fichier{{ fileGroup.length > 1 ? 's' : '' }}
-                        </div>
-                        <div v-for="(file, i) in fileGroup" :key="i" class="flex justify-between">
-                            <div>
-                                {{ file.file.name }}
+                    <div v-if="fileGroup.length > 0" class="card">
+                        <div class="flex flex-col gap-2">
+                            <div class="font-bold">
+                                {{ fileGroup.length }} fichier{{ fileGroup.length > 1 ? 's' : '' }}
                             </div>
-                            <div class="cursor-pointer" @click.prevent="updateFileGroup(file)">
-                                <font-awesome-icon icon="times" class="text-red-500" />
+                            <div v-for="(file, i) in fileGroup" :key="i" class="flex justify-between">
+                                <div>
+                                    {{ file.file.name }}
+                                </div>
+                                <div class="cursor-pointer" @click.prevent="updateFileGroup(file)">
+                                    <font-awesome-icon icon="times" class="text-red-500" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex gap-2 justify-center items-center mt-2 w-full">
-                            <div class="text-center button" @click="downloadFileGroup">
-                                <div class="flex gap-2 justify-center items-center">
-                                    <font-awesome-icon icon="arrow-down" />
-                                    <div>Télécharger</div>
+                            <div class="flex gap-2 justify-center items-center mt-2 w-full">
+                                <div class="text-center button" @click="downloadFileGroup">
+                                    <div class="flex gap-2 justify-center items-center">
+                                        <font-awesome-icon icon="arrow-down" />
+                                        <div>Télécharger</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
