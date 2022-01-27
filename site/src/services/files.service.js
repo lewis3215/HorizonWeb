@@ -68,10 +68,10 @@ class PostsService {
     }
 
     downloadFile({
-        query, label, 
+        url, label, 
     }) {
         return axios
-            .get(`${API_URL}/files/uploads/${query}`, {
+            .get(url, {
                 responseType: 'blob',
                 withCredentials: true,
             })

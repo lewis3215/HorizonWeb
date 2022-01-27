@@ -101,7 +101,7 @@
                     />
                 </div>
             </div>
-            <div v-if="$store.state.files.studyDocs">
+            <div>
                 <table v-if="docStyleList" class="w-full text-center table-auto">
                     <thead>
                         <tr>
@@ -117,7 +117,7 @@
                         <tr
                             v-for="(folder, i) in folderChildren"
                             :key="i"
-                            class="hover:bg-2-light hover:dark:bg-2-dark"
+                            class="hover:bg-2-light hover:dark:bg-2-dark cursor-pointer"
                             @click="
                                 ;(folderChildren = folder.children),
                                     (fileFilter[folder.context] = folder.title)
@@ -142,12 +142,12 @@
                             <tr
                                 v-for="(file, i) in $store.state.files.studyDocs"
                                 :key="i"
-                                class="group w-full"
+                                class="group hover:bg-2-light hover:dark:bg-2-dark cursor-pointer"
                                 :class="[file == filePreview ? 'bg-2' : '']"
                                 @click="setFilePreview(file)"
                             >
                                 <td class="p-2 pl-4 rounded-l-xl">
-                                    <div class="flex gap-2">
+                                    <div class="flex gap-2 items-center">
                                         <div class="flex justify-center items-center">
                                             <input
                                                 :class="[
@@ -160,6 +160,15 @@
                                                 :checked="fileGroup.includes(file)"
                                                 @click="updateFileGroup(file)"
                                             />
+                                        </div>
+                                        <div
+                                            v-if="file.file.user.roles.includes('moderator')"
+                                            class="relative"
+                                        >
+                                            <font-awesome-icon
+                                                class="text-blue-500"
+                                                icon="certificate"
+                                            ></font-awesome-icon>
                                         </div>
                                         <div class="flex justify-center items-center">
                                             <DocumentIcon
@@ -207,7 +216,7 @@
                             <tr
                                 v-for="(file, i) in $store.state.files.infoDocs"
                                 :key="i"
-                                class="group w-full"
+                                class="group hover:bg-2-light hover:dark:bg-2-dark cursor-pointer"
                                 :class="[file == filePreview ? 'bg-2' : '']"
                                 @click="setFilePreview(file)"
                             >
@@ -274,96 +283,163 @@
 
                     <div class="grid grid-cols-6 auto-rows-min gap-4">
                         <div
-                            v-for="(file, i) in $store.state.files.studyDocs"
+                            v-for="(folder, i) in folderChildren"
                             :key="i"
-                            class="group flex relative flex-col gap-1 justify-center items-center rounded hover:bg-2"
+                            class="group flex relative flex-col gap-1 justify-center items-center rounded cursor-pointer"
+                            @click="
+                                ;(folderChildren = folder.children),
+                                    (fileFilter[folder.context] = folder.title)
+                            "
                         >
-                            <input
-                                type="checkbox"
-                                class="hidden absolute top-0 left-0 md:block"
-                                :class="[fileGroup.length == 0 ? 'invisible group-hover:visible' : '']"
-                                :checked="fileGroup.includes(file)"
-                                @click="updateFileGroup(file)"
-                            />
-                            <Popper :offset-distance="'0'" :interactive="false">
-                                <div
-                                    class="flex flex-col gap-1 justify-center items-center"
-                                    @click="setFilePreview(file)"
-                                >
-                                    <DocumentIcon
-                                        class="w-12 h-12"
-                                        :mime="file.file.mimeType"
-                                        :file-name="file.file.name"
-                                    />
-                                    <div class="w-full text-sm text-center truncate">
-                                        {{ file.file.name }}
-                                    </div>
+                            <div class="flex flex-col gap-1 justify-center items-center">
+                                <font-awesome-icon size="3x" icon="folder"></font-awesome-icon>
+                                <div class="w-full text-sm text-center truncate">
+                                    {{ contextList[folder.context](folder.title) }}
                                 </div>
-
-                                <template #content>
-                                    <div class="flex flex-col p-2 card">
-                                        <div
-                                            v-for="(button, index) in dropDownButtons(file)"
-                                            :key="index"
-                                            class="flex gap-2 justify-center items-center py-2 px-4 hover:text-white rounded-xl"
-                                            :class="button.class"
-                                            @click="button.action()"
-                                        >
-                                            <font-awesome-icon :icon="button.icon" />
-                                            <p>{{ button.name }}</p>
+                            </div>
+                        </div>
+                        <template
+                            v-if="Object.keys(fileFilter).length == 3 && fileFilter?.query == 'InfoDocs'"
+                        >
+                            <div
+                                v-for="(file, i) in $store.state.files.infoDocs"
+                                :key="i"
+                                class="group flex relative flex-col gap-1 justify-center items-center rounded hover:bg-2"
+                            >
+                                <input
+                                    type="checkbox"
+                                    class="hidden absolute top-0 left-0 md:block"
+                                    :class="[fileGroup.length == 0 ? 'invisible group-hover:visible' : '']"
+                                    :checked="fileGroup.includes(file)"
+                                    @click="updateFileGroup(file)"
+                                />
+                                <Popper :offset-distance="'0'" :interactive="false">
+                                    <div
+                                        class="flex flex-col gap-1 justify-center items-center"
+                                        @click="setFilePreview(file)"
+                                    >
+                                        <DocumentIcon
+                                            class="w-12 h-12"
+                                            :mime="file.file.mimeType"
+                                            :file-name="file.file.name"
+                                        />
+                                        <div class="w-full text-sm text-center truncate">
+                                            {{ file.file.name }}
                                         </div>
                                     </div>
-                                </template>
-                            </Popper>
-                        </div>
+
+                                    <template #content>
+                                        <div class="flex flex-col p-2 card">
+                                            <div
+                                                v-for="(button, index) in dropDownButtons(file)"
+                                                :key="index"
+                                                class="flex gap-2 justify-center items-center py-2 px-4 hover:text-white rounded-xl"
+                                                :class="button.class"
+                                                @click="button.action()"
+                                            >
+                                                <font-awesome-icon :icon="button.icon" />
+                                                <p>{{ button.name }}</p>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </Popper>
+                            </div>
+                        </template>
+                        <template
+                            v-if="Object.keys(fileFilter).length == 5 && fileFilter?.query == 'StudyDocs'"
+                        >
+                            <div
+                                v-for="(file, i) in $store.state.files.studyDocs"
+                                :key="i"
+                                class="group flex relative flex-col gap-1 justify-center items-center rounded hover:bg-2"
+                            >
+                                <input
+                                    type="checkbox"
+                                    class="hidden absolute top-0 left-0 md:block"
+                                    :class="[fileGroup.length == 0 ? 'invisible group-hover:visible' : '']"
+                                    :checked="fileGroup.includes(file)"
+                                    @click="updateFileGroup(file)"
+                                />
+                                <Popper :offset-distance="'0'" :interactive="false">
+                                    <div
+                                        class="flex flex-col gap-1 justify-center items-center"
+                                        @click="setFilePreview(file)"
+                                    >
+                                        <DocumentIcon
+                                            class="w-12 h-12"
+                                            :mime="file.file.mimeType"
+                                            :file-name="file.file.name"
+                                        />
+                                        <div class="w-full text-sm text-center truncate">
+                                            {{ file.file.name }}
+                                        </div>
+                                    </div>
+
+                                    <template #content>
+                                        <div class="flex flex-col p-2 card">
+                                            <div
+                                                v-for="(button, index) in dropDownButtons(file)"
+                                                :key="index"
+                                                class="flex gap-2 justify-center items-center py-2 px-4 hover:text-white rounded-xl"
+                                                :class="button.class"
+                                                @click="button.action()"
+                                            >
+                                                <font-awesome-icon :icon="button.icon" />
+                                                <p>{{ button.name }}</p>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </Popper>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
         </div>
-        <div v-if="filePreview || fileGroup.length != 0" class="hidden relative w-1/5 md:block">
-            <div class="sticky top-4">
-                <div class="flex flex-col gap-2">
-                    <div v-if="filePreview" class="hidden md:block card">
-                        <div class="flex flex-col gap-2 divide-y">
-                            <div class="flex justify-center items-center">
-                                <DocumentIcon
-                                    class="w-24 h-24"
-                                    :mime="filePreview.file.mimeType"
-                                    :file-name="filePreview.file.name"
-                                />
+    </div>
+    <div v-if="filePreview || fileGroup.length != 0" class="hidden relative w-1/5 md:block">
+        <div class="sticky top-4">
+            <div class="flex flex-col gap-2">
+                <div v-if="filePreview" class="hidden md:block card">
+                    <div class="flex flex-col gap-2 divide-y">
+                        <div class="flex justify-center items-center">
+                            <DocumentIcon
+                                class="w-24 h-24"
+                                :mime="filePreview.file.mimeType"
+                                :file-name="filePreview.file.name"
+                            />
+                        </div>
+                        <div class="text-center">
+                            <div class="text-lg font-bold">
+                                {{ filePreview.file.name }}
                             </div>
-                            <div class="text-center">
-                                <div class="text-lg font-bold">
-                                    {{ filePreview.file.name }}
-                                </div>
-                                <div class="text-sm">
-                                    {{ new Date(filePreview.createdAt).toLocaleDateString() }}
-                                </div>
-                                <div class="text-sm">
-                                    {{ formatBytes(filePreview.file.fileSize) }}
-                                </div>
+                            <div class="text-sm">
+                                {{ new Date(filePreview.createdAt).toLocaleDateString() }}
+                            </div>
+                            <div class="text-sm">
+                                {{ formatBytes(filePreview.file.fileSize) }}
                             </div>
                         </div>
                     </div>
-                    <div v-if="fileGroup.length > 1" class="card">
-                        <div class="flex flex-col gap-2">
-                            <div class="font-bold">
-                                {{ fileGroup.length }} fichier{{ fileGroup.length > 1 ? 's' : '' }}
+                </div>
+                <div v-if="fileGroup.length > 0" class="card">
+                    <div class="flex flex-col gap-2">
+                        <div class="font-bold">
+                            {{ fileGroup.length }} fichier{{ fileGroup.length > 1 ? 's' : '' }}
+                        </div>
+                        <div v-for="(file, i) in fileGroup" :key="i" class="flex justify-between">
+                            <div>
+                                {{ file.file.name }}
                             </div>
-                            <div v-for="(file, i) in fileGroup" :key="i" class="flex justify-between">
-                                <div>
-                                    {{ file.file.name }}
-                                </div>
-                                <div class="cursor-pointer" @click.prevent="updateFileGroup(file)">
-                                    <font-awesome-icon icon="times" class="text-red-500" />
-                                </div>
+                            <div class="cursor-pointer" @click.prevent="updateFileGroup(file)">
+                                <font-awesome-icon icon="times" class="text-red-500" />
                             </div>
-                            <div class="flex gap-2 justify-center items-center mt-2 w-full">
-                                <div class="text-center button" @click="downloadFileGroup">
-                                    <div>
-                                        <font-awesome-icon icon="arrow-down" />
-                                        Télécharger
-                                    </div>
+                        </div>
+                        <div class="flex gap-2 justify-center items-center mt-2 w-full">
+                            <div class="text-center button" @click="downloadFileGroup">
+                                <div class="flex gap-2 justify-center items-center">
+                                    <font-awesome-icon icon="arrow-down" />
+                                    <div>Télécharger</div>
                                 </div>
                             </div>
                         </div>
@@ -380,7 +456,6 @@ import AppModal from '@/components/App/AppModal.vue'
 import DocumentIcon from '@/components/Document/DocumentIcon.vue'
 import FileFolder from '@/components/Document/FileFolder.vue'
 import DropDownInput from '@/components/Input/DropDownInput.vue'
-import filesService from '@/services/files.service'
 import formatBytes from '@/utils/formatByteSize'
 import _ from 'lodash'
 import Popper from 'vue3-popper'
@@ -456,6 +531,18 @@ export default {
                     icon: 'arrow-down',
                     class: 'hover:bg-green-500 hover:text-white',
                     action: () => {
+                        console.log(studyDoc)
+                        this.$store.dispatch('files/downloadFile', {
+                            url: studyDoc.file.url,
+                            label: studyDoc.file.name,
+                        })
+                    },
+                },
+                {
+                    name: 'Voir',
+                    icon: 'eye',
+                    class: 'hover:bg-green-500 hover:text-white',
+                    action: () => {
                         window.open(studyDoc.file.url, '_blank').focus()
                     },
                 },
@@ -493,8 +580,8 @@ export default {
         },
         downloadFileGroup() {
             for (const el of this.fileGroup) {
-                filesService.downloadFile({
-                    query: el.file.fileUploadId,
+                this.$store.dispatch('files/downloadFile', {
+                    url: el.file.url,
                     label: el.file.name,
                 })
             }

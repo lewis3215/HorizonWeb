@@ -116,6 +116,10 @@ export const files = {
                 },
             )
         },
+
+        downloadFile(_, query) {
+            return FileService.downloadFile(query)
+        },
     },
     mutations: {
         refreshStudyDocs(state) {
