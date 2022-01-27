@@ -28,6 +28,7 @@ import { User } from "../../users/user.entity";
 import { FileUploadsService } from "../file-uploads/file-uploads.service";
 import { CategoryTypesDto } from "./dto/category-types.dto";
 import { CreateInfoDocDto } from "./dto/create-info-doc.dto";
+import { DocsFilterDto } from "./dto/docs-filter.dto";
 import { UpdateInfoDocDto } from "./dto/update-info-doc.dto";
 import { InfoDoc } from "./info-doc.entity";
 import type { IndexedInfoDoc } from "./info-docs-search.service";
@@ -65,7 +66,7 @@ export class InfoDocsController {
   @Get()
   @CheckPolicies((ability) => ability.can(Action.Read, InfoDoc))
   public async findAllInfoDocs(
-    @Query() query: PaginateDto
+    @Query() query: DocsFilterDto
   ): Promise<PaginatedResult<InfoDoc>> {
     if (query.page)
       return await this.infoDocsService.findAll({

@@ -1,5 +1,5 @@
 <template>
-    <div class="my-8 mx-auto w-21/24 shadow-md card">
+    <div class="my-8 mx-auto shadow-md w-21/24 card">
         <FormMultiStep
             v-model="stepAction"
             :steps="steps"
@@ -257,7 +257,6 @@
                                 </AppAlert>
                             </div>
                         </div>
-                        {{ stepsModel[1].docContent }}
                         <div
                             v-if="
                                 ['examDE', 'examCE', 'examCC', 'examDM', 'examTAI'].includes(
@@ -281,7 +280,7 @@
                             <div for="content">Contenu du dépôt<span class="text-red-500">*</span></div>
                             <SelectInput
                                 v-model="stepsModel[1].docFlags"
-                                :choices="['Corrigé', 'Sujet + Corrigé', 'Copie d\'étudiant']"
+                                :choices="['Sujet', 'Corrigé', 'Sujet + Corrigé', 'Copie d\'étudiant']"
                             />
                             <div v-if="v$.stepsModel[1].docFlags.$error" class="flex flex-col">
                                 <AppAlert
@@ -376,7 +375,7 @@ import SearchInput from '@/components/Input/SearchInput.vue'
 import SelectInput from '@/components/Input/SelectInput.vue'
 import useVuelidate from '@vuelidate/core'
 import {
-    alphaNum, integer, maxLength, required, requiredIf, sameAs,
+    integer, maxLength, required, requiredIf, sameAs,
 } from '@vuelidate/validators'
 
 
@@ -421,10 +420,10 @@ export default {
                     files: { required },
                     docName: {
                         required,
-                        alphaNum,
-                        maxLength: maxLength(10),
+
+                        maxLength: maxLength(20),
                     },
-                    docDescription: { alphaNum },
+                    docDescription: {  },
                 },
                 {
                     docSubject: { requiredIf: requiredIf(this.stepsModel[0].docType == 'studyDoc') },

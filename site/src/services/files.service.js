@@ -6,7 +6,7 @@ class PostsService {
     getStudyDocs(query) {
         return axios
             .get(`${API_URL}/files/study-docs`, {
-                data: query,
+                params: query,
                 withCredentials: true,
                 headers: { Accept: 'application/json' },
             })
@@ -16,7 +16,7 @@ class PostsService {
     getInfoDocs(query) {
         return axios
             .get(`${API_URL}/files/info-docs`, {
-                data: query,
+                params: query,
                 withCredentials: true,
                 headers: { Accept: 'application/json' },
             })
@@ -67,7 +67,9 @@ class PostsService {
             .then((res) => res.data)
     }
 
-    downloadFile({ url, label }) {
+    downloadFile({
+        url, label, 
+    }) {
         return axios
             .get(url, {
                 responseType: 'blob',
