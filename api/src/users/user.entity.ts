@@ -2,18 +2,18 @@ import {
   Collection,
   Entity,
   Enum,
-  Index,
   OneToMany,
   PrimaryKey,
   Property,
-  Unique,
 } from '@mikro-orm/core';
 import * as bcrypt from 'bcrypt';
 import { Exclude, Expose } from 'class-transformer';
 import type { BadgeUnlock } from '../badges/badge-unlock.entity';
 import { EMAIL_INCLUDED, PERSONAL_INFO_INCLUDED } from '../shared/lib/constants';
 import { BaseEntity } from '../shared/lib/entities/base.entity';
+import { UserCreationOptions } from '../shared/lib/types/user-creation-options.interface';
 import { Role } from '../shared/modules/authorization/types/role.enum';
+import { SchoolRole } from '../shared/modules/authorization/types/school-roles.enum';
 
 @Entity()
 export class User extends BaseEntity {
@@ -36,8 +36,6 @@ export class User extends BaseEntity {
   password?: string;
 
   @Property({ type: 'text' })
-  @Unique()
-  @Index()
   @Expose({ groups: [EMAIL_INCLUDED] })
   email!: string;
 
@@ -56,6 +54,9 @@ export class User extends BaseEntity {
   @Enum({ items: () => Role, array: true, default: [Role.User] })
   roles: Role[] = [Role.User];
 
+  @Enum({ items: () => SchoolRole, array: true, default: [] })
+  schoolRoles: SchoolRole[] = [];
+
   @Property({ type: 'text' })
   color?: string;
 
@@ -71,19 +72,14 @@ export class User extends BaseEntity {
   @Expose({ groups: [PERSONAL_INFO_INCLUDED] })
   description?: string;
 
-  constructor(options: {
-    username: string;
-    email: string;
-    firstname: string;
-    lastname: string;
-    fullname: string;
-  }) {
+  constructor(options: UserCreationOptions) {
     super();
     this.userId = options.username;
     this.email = options.email;
     this.firstname = options.firstname;
     this.lastname = options.lastname;
     this.fullname = options.fullname;
+    this.schoolRoles = options.schoolRoles;
   }
 
   public async setPassword(password: string): Promise<void> {
@@ -92,5 +88,14 @@ export class User extends BaseEntity {
 
   public async validatePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.password!);
+  }
+
+  public hasChanged(dto: UserCreationOptions): boolean {
+    return this.firstname !== dto.firstname
+      || this.lastname !== dto.lastname
+      || this.fullname !== dto.fullname
+      || this.email !== dto.email
+      || !this.schoolRoles.every(role => dto.schoolRoles.includes(role))
+      || !dto.schoolRoles.every(role => this.schoolRoles.includes(role));
   }
 }

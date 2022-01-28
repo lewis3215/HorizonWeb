@@ -6,7 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
-import { config } from './config';
+import { computedConfig, config } from './config';
 import { ExceptionsFilter } from './shared/lib/filters/exceptions.filter';
 import { TypesenseFilter } from './shared/lib/filters/typesense.filter';
 import { logger as loggerMiddleware } from './shared/lib/middlewares/logger.middleware';
@@ -50,7 +50,7 @@ async function bootstrap(): Promise<void> {
   app.use(loggerMiddleware);
   app.use(cookieParser(config.get('cookieSignature')));
 
-  app.enableCors({ origin: config.get('frontendUrl'), credentials: true });
+  app.enableCors({ origin: computedConfig.frontendUrl, credentials: true });
   app.enableShutdownHooks();
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
